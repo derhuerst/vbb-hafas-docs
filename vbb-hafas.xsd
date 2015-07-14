@@ -1,0 +1,2003 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.20" xmlns="hafas_rest" targetNamespace="hafas_rest" elementFormDefault="qualified">
+
+	<!--  general stuff -->
+
+	<xs:attributeGroup name="attlist.Common">
+		<xs:attribute name="serverVersion" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>The version of the HAFAS proxy server which was used to calculate that result.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="dialectVersion" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>The version of the response data structure.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="version" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>The data version in the HAFAS server which was used to calculate that result.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="errorCode" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>If the request fails, then the errorCode is filled.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="errorText" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>If the request fails, then the errorText is filled.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+
+	<xs:element name="Error">
+		<xs:annotation>
+			<xs:documentation>This element represents the response in case of any error</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attributeGroup ref="attlist.Common"/>
+		</xs:complexType>
+	</xs:element>
+
+	<!--  location serice -->
+
+	<xs:element name="LocationList">
+		<xs:annotation>
+			<xs:documentation>The location list contains either named coordinates or stops/stations with name and id as a result of a location request. The data of every list entry can be used for further trip or departureBoard requests.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="StopLocation" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="CoordLocation" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.Common"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="StopLocation">
+		<xs:annotation>
+			<xs:documentation>The element StopLocation specifies a stop/station in a result of a location request.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="LocationNotes" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Contains a list of notes to be displayed for this location, like attributes or footnotes.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.StopLocation"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.StopLocation">
+		<xs:attribute name="id" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>This ID can either be used as originId or destId to perform a trip request or to call a departure or arrival board.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="extId" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>This ID defines an alternative ID for this stop location and can not be used to perform further requests.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Contains the output name of this stop or station</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="lon" type="xs:decimal" use="optional">
+			<xs:annotation>
+				<xs:documentation>The WGS84 longitude of the geographical position of the stop/station.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="lat" type="xs:decimal" use="optional">
+			<xs:annotation>
+				<xs:documentation>The WGS84 latitude of the geographical position of the stop/station.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="track" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Track information, if available.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="weight" type="xs:int" use="optional">
+			<xs:annotation>
+				<xs:documentation>This value specifies some kind of importance of this stop. The more traffic at this stop the higher the weight. The range is between 0 and 32767. This attribute is only available in the location.allstops response</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="dist" type="xs:int">
+			<xs:annotation>
+				<xs:documentation>This value specifies the distance to the given coordinate if called by a nearby search request.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="products" type="xs:int">
+			<xs:annotation>
+				<xs:documentation>This value specifies the products available at this location.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="meta" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>True, if the stop is a meta stop.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:element name="CoordLocation">
+		<xs:annotation>
+			<xs:documentation>The element CoordLocation specifies a coordinate based location in a result of a location request. It contains an output name, latitude, longitude and a type (address or point of interest). The coordinates and the name can be used as origin or destination parameters to perform a trip request.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="LocationNotes" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Contains a list of notes to be displayed for this location, like attributes or footnotes.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.CoordLocation"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.CoordLocation">
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Contains the output name of the address or point of interest</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="type" use="required">
+			<xs:annotation>
+				<xs:documentation>The attribute type specifies the type of location. Valid values are ADR (address) or POI (point of interest). This attribute can be used to do some sort of classification in the user interface. For later trip requests it does not have any meaning.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="ADR"/>
+					<xs:enumeration value="POI"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="lon" type="xs:decimal" use="required">
+			<xs:annotation>
+				<xs:documentation>The WGS84 longitude of the geographical position of the stop/station.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="lat" type="xs:decimal" use="required">
+			<xs:annotation>
+				<xs:documentation>The WGS84 latitude of the geographical position of the stop/station.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="dist" type="xs:int">
+			<xs:annotation>
+				<xs:documentation>This value specifies the distance to the given coordinate if called by a nearby search request.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:element name="LocationNotes">
+		<xs:annotation>
+			<xs:documentation>Contains a list of notes to be displayed for this location.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="LocationNote" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Note to be displayed</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="LocationNote">
+		<xs:annotation>
+			<xs:documentation>Text to be displayed</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attributeGroup ref="attlist.LocationNote"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.LocationNote">
+		<xs:attribute name="key" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>An identifier of this note. The identifier is composed of a two letter combination further identifying the content of the note.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="type" type="NoteType" use="optional" default="U">
+			<xs:annotation>
+				<xs:documentation>The type of this note.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:simpleType name="NoteType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="U">
+				<xs:annotation>
+					<xs:documentation>Unknown</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="A">
+				<xs:annotation>
+					<xs:documentation>Attribute</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="I">
+				<xs:annotation>
+					<xs:documentation>Infotext</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="R">
+				<xs:annotation>
+					<xs:documentation>Realtime</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="H">
+				<xs:annotation>
+					<xs:documentation>Hint</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- geometry stuff -->
+
+	<xs:element name="Geometry">
+		<xs:annotation>
+			<xs:documentation>This Element represents the response for the Geometry Request</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Points">
+					<xs:annotation>
+						<xs:documentation>Contains a list of points which represent the requested polyline</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Point" minOccurs="2" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>One point of the requested polyline</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="lat" type="xs:decimal" use="required">
+										<xs:annotation>
+											<xs:documentation>The WGS84 latitude</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="lon" type="xs:decimal" use="required">
+										<xs:annotation>
+											<xs:documentation>The WGS84 longitude</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.Geometry"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.Geometry">
+		<xs:attribute name="errorCode" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>If the geometry request fails, then the errorCode is filled.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="errorText" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>If the geometry request fails, then the errorText is filled.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="version" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>The data version in the HAFAS server which was used to calculate that result.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+
+	<!-- todo: what is this? -->
+
+	<xs:complexType name="Polyline">
+		<xs:sequence>
+			<xs:element name="crd" type="xs:int" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>List of coordinates. Attribute "dim" defines how many items are used to build one coordinate tuple.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="optional"/>
+		<xs:attribute name="delta" type="xs:boolean" use="required">
+			<xs:annotation>
+				<xs:documentation>true: After the first item of the coordinates list only diff values are listed. false: list of coordinates contains complete coordinates.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="dim" type="xs:int" use="optional" default="2">
+			<xs:annotation>
+				<xs:documentation>Count of coordinate elements building one coordinate tuple. (2: x1, y1, x2, y2, ...; 3: x1, y1, z1, x2, y2, z2, ...)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="type" type="CoordType" use="optional" default="WGS84"/>
+		<xs:attribute name="crdEncYX" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Encoded YX coordinate values.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="crdEncZ" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Encoded Z coordinate values.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="crdEncS" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Encoded quantifier.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:simpleType name="CoordType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="WGS84"/>
+			<xs:enumeration value="PLANAR"/>
+			<xs:enumeration value="HAFASGEO"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- arrivals service -->
+
+	<xs:element name="ArrivalBoard">
+		<xs:annotation>
+			<xs:documentation>The arrival board lists arrivals at a specific stop/station or group of stop/stations.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="Arrival">
+					<xs:annotation>
+						<xs:documentation>The element Arrival contains all information about a arrival like time, date, stop/station name, track, realtime time, date and track, origin, name and type of the journey. It also contains a reference to journey details.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.Common"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Arrival">
+		<xs:annotation>
+			<xs:documentation>The element Arrival contains all information about a arrival like time, date, stop/station name, track, realtime time, date and track, origin, name and type of the journey. It also contains a reference to journey details.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="JourneyDetailRef"/>
+				<xs:element ref="Product" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Product context, provides access to internal data</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="Notes" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.Arrival"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Notes">
+		<xs:annotation>
+			<xs:documentation>Contains a text with notes to be displayed for this leg, like attributes or footnotes.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Note" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Note to be displayed</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attributeGroup ref="attlist.Note"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.Note">
+		<xs:attribute name="key" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>An identifier of this note. The identifier is a two letter combination further identifying the content of the note.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="type" type="NoteType" use="optional">
+			<xs:annotation>
+				<xs:documentation>The type of this note.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="priority" type="xs:int" use="optional">
+			<xs:annotation>
+				<xs:documentation>The priority of this note. A lower priority value means a higher importance. A priority with value -1 means priority is undefined.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="routeIdxFrom" type="xs:int" use="optional">
+			<xs:annotation>
+				<xs:documentation>First stop/station where this note is valid. See the Stops list in the JourneyDetail response for this leg to get more details about this stop/station.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="routeIdxTo" type="xs:int" use="optional">
+			<xs:annotation>
+				<xs:documentation>Last stop/station where this note is valid. See the Stops list in the JourneyDetail response for this leg to get more details about this stop/station.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="attlist.Arrival">
+		<xs:attribute name="name" use="required">
+			<xs:annotation>
+				<xs:documentation>Specifies the name of the arriving journey (e.g. "Bus 100") as used for display.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="stop" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Contains the name of the stop/station.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="stopid" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Contains the ID of the stop/station.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="stopExtId" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>External ID of this stop/station</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="prognosisType" type="PrognosisType" use="optional">
+			<xs:annotation>
+				<xs:documentation>Prognosis type of arrival date and time.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="time" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Time in format HH:MM:SS</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="date" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Date in format YYYY-MM-DD.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="tz" type="xs:int" use="optional" default="0">
+			<xs:annotation>
+				<xs:documentation>Time zone information in the format +/- hours</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="track" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Arrival track information, if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rtTime" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Realtime time in format HH:MM:SS if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rtDate" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Realtime time zone information in the format +/- hours</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rtTz" type="xs:int" use="optional" default="0">
+			<xs:annotation>
+				<xs:documentation>Realtime timezone in the format +/- hours</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rtTrack" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Realtime track information, if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="cancelled" type="xs:boolean" use="optional" default="false">
+			<xs:annotation>
+				<xs:documentation>Will be true if this journey is cancelled</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="origin" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Origin of the journey. This is the first stop of the journey. Get the full journey of the train or bus with the JourneyDetails service.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="timeAtOrigin" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Time in format HH:MM:SS the services starts at the origin.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="dateAtOrigin" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Date in format YYYY-MM-DD the services starts at the origin.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rtTimeAtOrigin" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Realtime time in format HH:MM:SS the services starts at the origin.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rtDateAtOrigin" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Realtime date in format YYYY-MM-DD the services starts at the origin.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="trainNumber" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Train number as used for display.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="trainCategory" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Train category as used for display.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:element name="Product">
+		<xs:annotation>
+			<xs:documentation>Product context, provides access to internal data. For the product category attributes, their assignments are defined in the "zugart" file from the raw Hafas plan data.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="name" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>Product name for display. The name might be composed from product number, line and/or category. This is customer specific.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="num" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>Internal product number (e.g. train number)</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="line" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>Line name if available (e.g. "R10")</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="catOut" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>Product category name as used for display in standard form.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="catIn" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>Internal product category name.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="catCode" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>Product category code.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="catOutS" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>Product category name for display in short form.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="catOutL" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>Product category name for display in long form.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="operatorCode" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>The operator code.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="operator" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>The operator name.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="admin" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>The administration name.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="JourneyDetailRef">
+		<xs:annotation>
+			<xs:documentation>Reference to journey details of this leg.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attributeGroup ref="attlist.JourneyDetailRef"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.JourneyDetailRef">
+		<xs:attribute name="ref" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Contains a URL to call the ReST interface for journey details.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:simpleType name="PrognosisType">
+		<xs:annotation>
+			<xs:documentation>PrognosisType provides the type of the prognosis like if the prognosis was reported by an external provider or calculated or corrected by the system.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PROGNOSED">
+				<xs:annotation>
+					<xs:documentation>Prognosis was reported from an external provider as a prognosis for the future.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MANUAL">
+				<xs:annotation>
+					<xs:documentation>Prognosis was reported from an external provider from a manual entry.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="REPORTED">
+				<xs:annotation>
+					<xs:documentation>Prognosis was reported from an external provider as a delay for previously passed stations.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CORRECTED">
+				<xs:annotation>
+					<xs:documentation>Prognosis was corrected by the system to adjust the prognoses over the train's journey to ensure proper continuation.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CALCULATED">
+				<xs:annotation>
+					<xs:documentation>Prognosis was calculated by the system for upcoming stations or to fill gaps for previously passed stations where no delay was reported.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- departures service -->
+
+	<xs:element name="DepartureBoard">
+		<xs:annotation>
+			<xs:documentation>The departure board lists departures at a specific stop/station or group of stop/stations.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="Departure">
+					<xs:annotation>
+						<xs:documentation>The element Departure contains all information about a departure like time, date, stop/station name, track, realtime time, date and track, direction, name and type of the journey. It also contains a reference to journey details.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.Common"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Departure">
+		<xs:annotation>
+			<xs:documentation>The element Departure contains all information about a departure like time, date, stop/station name, track, realtime time, date and track, direction, name and type of the journey. It also contains a reference to journey details.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:annotation>
+					<xs:documentation>Product context, provides access to internal data</xs:documentation>
+				</xs:annotation>
+				<xs:element ref="JourneyDetailRef"/>
+				<xs:element ref="Product" minOccurs="0"/>
+				<xs:element ref="Notes" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.Departure"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.Departure">
+		<xs:attribute name="name" use="required">
+			<xs:annotation>
+				<xs:documentation>Specifies the name of the departing journey (e.g. "Bus 100") as used for display.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="type" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>The attribute type specifies the type of the
+					departing journey.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="stop" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Contains the name of the stop/station.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="stopid" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Contains the ID of the stop/station.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="stopExtId" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>External ID of this stop/station</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="prognosisType" type="PrognosisType" use="optional">
+			<xs:annotation>
+				<xs:documentation>Prognosis type of departure date and time.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="time" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Time in format HH:MM:SS</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="date" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Date in format YYYY-MM-DD.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="tz" type="xs:int" use="optional" default="0">
+			<xs:annotation>
+				<xs:documentation>Time zone information in the format +/- hours</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="track" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Track information, if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rtTime" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Realtime time in format HH:MM:SS if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rtDate" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Realtime date in format YYYY-MM-DD, if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rtTz" type="xs:int" use="optional" default="0">
+			<xs:annotation>
+				<xs:documentation>Realtime time zone information in the format +/- hours</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rtTrack" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Realtime track information, if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="cancelled" type="xs:boolean" use="optional" default="false">
+			<xs:annotation>
+				<xs:documentation>Will be true if this journey is cancelled</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="direction" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Direction information. This is the last stop of the journey. Get the full journey of the train or bus with the JourneyDetails service.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="timeAtArrival" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Time in format HH:MM:SS the services arrives at the destination.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="dateAtArrival" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Date in format YYYY-MM-DD the services arrives at the destination.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rtTimeAtArrival" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Realtime time in format HH:MM:SS the services arrives at the destination.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rtDateAtArrival" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Realtime date in format YYYY-MM-DD the services arrives at the destination.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="trainNumber" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Train number as used for display.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="trainCategory" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Train category as used for display.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isFastest" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>Services is 'fastest service to' location.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+
+	<!-- journey service -->
+
+	<xs:element name="JourneyDetail">
+		<xs:annotation>
+			<xs:documentation>The journey details contain a list of stops/stations and notes. They also contain the journeys names and types.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence minOccurs="0">
+				<xs:element ref="Stops"/>
+				<xs:element ref="GeometryRef" minOccurs="0"/>
+				<xs:element ref="Names" minOccurs="0"/>
+				<xs:element ref="Directions" minOccurs="0"/>
+				<xs:element ref="Notes" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Contains notes to be displayed for this trip like attributes or footnotes.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="Messages" minOccurs="0"/>
+				<xs:element ref="JourneyStatus" minOccurs="0"/>
+				<xs:element name="Polyline" type="Polyline" minOccurs="0"/>
+				<xs:element ref="ServiceDays" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.Common"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Stops">
+		<xs:annotation>
+			<xs:documentation>The list of journey stops/stations.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Stop" minOccurs="2" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>The element Stop contains the name of the stop/station, the route index, the latitude, the longitude, the departure time and date, the arrival time and date, the track, the realtime departure time and date, the realtime arrival time and date and the realtime track.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="Notes" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Contains a list of notes to be displayed for this location, like attributes or footnotes.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+						<xs:attributeGroup ref="attlist.Stop"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.Stop">
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Contains the name of the stop/station.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="id" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Contains the ID of the stop/station.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="extId" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Contains the external ID of the stop/station.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="routeIdx" type="xs:int" use="optional">
+			<xs:annotation>
+				<xs:documentation>Route index of a stop/station. Usually starting from 0 and incrementing by 1. If the route index value jumps, it is most likely that the journey was rerouted.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="lon" type="xs:decimal" use="optional">
+			<xs:annotation>
+				<xs:documentation>The WGS84 longitude of the geographical position of the stop/station.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="lat" type="xs:decimal" use="optional">
+			<xs:annotation>
+				<xs:documentation>The WGS84 latitude of the geographical position of the stop/station</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="arrPrognosisType" type="PrognosisType" use="optional">
+			<xs:annotation>
+				<xs:documentation>Prognosis type of arrival date and time.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="depPrognosisType" type="PrognosisType" use="optional">
+			<xs:annotation>
+				<xs:documentation>Prognosis type of departure date and time.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="depTime" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Departure time in format HH:MM:SS, if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="depDate" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Departure date in format YYYY-MM-DD, if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="depTz" type="xs:int" use="optional" default="0">
+			<xs:annotation>
+				<xs:documentation>Departure time zone information in the format +/- hours</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="arrTime" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Arrival time in format HH:MM:SS, if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="arrDate" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Arrival date in format YYYY-MM-DD, if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="arrTz" type="xs:int" use="optional" default="0">
+			<xs:annotation>
+				<xs:documentation>Arrival time zone information in the format +/- hours</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="passingTime" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Passing time in format HH:MM:SS, if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="passingDate" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Passing date in format YYYY-MM-DD, if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="passingTz" type="xs:int" use="optional" default="0">
+			<xs:annotation>
+				<xs:documentation>Passing time zone information in the format +/- hours</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="arrTrack" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Arrival track information, if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="depTrack" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Departure track information, if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rtDepTime" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Realtime departure time in format HH:MM:SS if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rtDepDate" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Realtime departure date in format YYYY-MM-DD, if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rtDepTz" type="xs:int" use="optional" default="0">
+			<xs:annotation>
+				<xs:documentation>Realtime departure time zone information in the format +/- hours</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rtArrTime" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Realtime arrival time in format HH:MM:SS if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rtArrDate" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Realtime arrival date in format YYYY-MM-DD, if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rtArrTz" type="xs:int" use="optional" default="0">
+			<xs:annotation>
+				<xs:documentation>Realtime arrival time zone information in the format +/- hours</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rtArrTrack" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Realtime arrival track information, if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rtDepTrack" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Realtime departure track information, if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rtPassingTime" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Realtime passing time in format HH:MM:SS, if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rtPassingDate" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Realtime passing date in format YYYY-MM-DD, if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rtPassingTz" type="xs:int" use="optional" default="0">
+			<xs:annotation>
+				<xs:documentation>Realtime passing time zone information in the format +/- hours</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="cancelled" type="xs:boolean" use="optional" default="false">
+			<xs:annotation>
+				<xs:documentation>Will be true if this journey is cancelled</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:element name="Directions">
+		<xs:annotation>
+			<xs:documentation>The list of journey directions.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Direction" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Direction information. This is usually the last stop of the journey.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attributeGroup ref="attlist.Direction"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.Direction">
+		<xs:attribute name="routeIdxFrom" type="xs:int" use="required">
+			<xs:annotation>
+				<xs:documentation>Defines the first stop/station where this type is valid. See the Stops list for details of the stop/station.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="routeIdxTo" type="xs:int" use="required">
+			<xs:annotation>
+				<xs:documentation>Defines the last stop/station where this type is valid. See the Stops list for details of the stop/station.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+
+	<xs:element name="Messages">
+		<xs:annotation>
+			<xs:documentation>Contains notes to be displayed for this trip.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Message" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Text to be displayed</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attributeGroup ref="attlist.Message"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:attributeGroup name="attlist.Message">
+		<xs:attribute name="id" type="xs:string" use="required"/>
+		<xs:attribute name="type" type="messageType" use="required"/>
+		<xs:attribute name="act" type="xs:boolean" use="required"/>
+		<xs:attribute name="pub" type="xs:string" use="required"/>
+		<xs:attribute name="head" type="xs:string" use="required"/>
+		<xs:attribute name="lead" type="xs:string" use="required"/>
+		<xs:attribute name="text" type="xs:string" use="required"/>
+		<xs:attribute name="tckr" type="xs:string" use="required"/>
+		<xs:attribute name="priority" type="xs:int" use="required"/>
+		<xs:attribute name="icon" type="xs:string"/>
+		<xs:attribute name="routeIdxFrom" type="xs:int" use="optional">
+			<xs:annotation>
+				<xs:documentation>First stop/station where this message is valid. See the Stops list in the JourneyDetail response for this leg to get more details about this stop/station.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="routeIdxTo" type="xs:int" use="optional">
+			<xs:annotation>
+				<xs:documentation>Last stop/station where this message is valid. See the Stops list in the JourneyDetail response for this leg to get more details about this stop/station.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:simpleType name="messageType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="UNDEF"/>
+			<xs:enumeration value="JNY"/>
+			<xs:enumeration value="ROU"/>
+			<xs:enumeration value="LIN"/>
+			<xs:enumeration value="REG"/>
+			<xs:enumeration value="CNTY"/>
+			<xs:enumeration value="GLOB"/>
+			<xs:enumeration value="LOC"/>
+			<xs:enumeration value="FOOT"/>
+			<xs:enumeration value="HEAD"/>
+			<xs:enumeration value="PSGR"/>
+			<xs:enumeration value="IFRA"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="GeometryRef">
+		<xs:annotation>
+			<xs:documentation>Reference to polyline of this leg.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="ref" use="required">
+				<xs:annotation>
+					<xs:documentation>Contains a URL to call the ReST interface for geometry of this journey</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Names">
+		<xs:annotation>
+			<xs:documentation>The list of journey names.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Name" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Contains name of journey.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="Product" minOccurs="0"/>
+						</xs:sequence>
+						<xs:attributeGroup ref="attlist.Name"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.Name">
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Name to be displayed.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="number" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>The train number.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="category" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>The train category.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="routeIdxFrom" type="xs:int" use="required">
+			<xs:annotation>
+				<xs:documentation>Defines the first stop/station where this name is valid. See the Stops list for details of the stop/station.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="routeIdxTo" type="xs:int" use="required">
+			<xs:annotation>
+				<xs:documentation>Defines the last stop/station where this name is valid. See the Stops list for details of the stop/station.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:element name="JourneyStatus">
+		<xs:annotation>
+			<xs:documentation>Contains the status of the journey.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="P">
+                    <xs:annotation>
+                        <xs:documentation>Planned: A planned journey. This is also the default value.</xs:documentation>
+                    </xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="R">
+                    <xs:annotation>
+                        <xs:documentation>Replacement: The journey was added as a replacement for a planned journey.</xs:documentation>
+                    </xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="A">
+                    <xs:annotation>
+                        <xs:documentation>Additional: The journey is an additional journey to the planned journeys.</xs:documentation>
+                    </xs:annotation>
+				</xs:enumeration>
+				<xs:enumeration value="S">
+                    <xs:annotation>
+                        <xs:documentation>Special: This is a special journey. The exact definition which journeys are considered special up to the customer.</xs:documentation>
+                    </xs:annotation>
+				</xs:enumeration>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ServiceDays">
+		<xs:annotation/>
+		<xs:complexType>
+			<xs:annotation>
+				<xs:documentation>Regular service days for this trip meaning the days where this train runs its regular schedule.</xs:documentation>
+				<xs:documentation>Irregular service days for this trip meaning the days there this train runs on a different schedule.</xs:documentation>
+			</xs:annotation>
+			<xs:attribute name="planningPeriodBegin" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>Start of the planning period of this data in format YYYY-MM-DD.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="planningPeriodEnd" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>End of the planning period of this data in format YYYY-MM-DD.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="sDaysR" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>Regular service days for this trip meaning the days where this train runs its regular schedule.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="sDaysI" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>Irregular service days for this trip meaning the days there this train runs on a different schedule</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="sDaysB" type="xs:string" use="optional"/>
+			<xs:attribute name="routeIdxFrom" type="xs:int" use="optional">
+				<xs:annotation>
+					<xs:documentation>First stop/station where this note is valid. See the Stops list in the JourneyDetail response for this leg to get more details about this stop/station.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="routeIdxTo" type="xs:int" use="optional">
+				<xs:annotation>
+					<xs:documentation>Last stop/station where this note is valid. See the Stops list in the JourneyDetail response for this leg to get more details about this stop/station.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+	<!-- trip service -->
+	<!-- todo: difference to journey service? -->
+
+	<xs:element name="TripList">
+		<xs:annotation>
+			<xs:documentation>The trip list contains all found trips of that trip request. If a major error occured during the trip request, then the attributes errorCode and errorText are filled and no Trip is available.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Trip" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Pricing" type="pricingType" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.TripList"/>
+			<xs:attributeGroup ref="attlist.Common"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.TripList">
+		<xs:attribute name="scrB" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>The context for scroll request backward. Set the context attribute in a Trip request for finding earlier connections.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="scrF" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>The context for scroll request forward. Set the context attribute in a Trip request for finding later connections.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="scrReturnB" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>The context for scroll request backward for returning trips. Set the context attribute in a Trip request for finding earlier connections.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="scrReturnF" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>The context for scroll request forward for returning trips. Set the context attribute in a Trip request for finding later connections.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:complexType name="pricingType">
+		<xs:sequence>
+			<xs:any/>
+		</xs:sequence>
+		<xs:attribute name="idx" type="xs:int" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="EcoType">
+		<xs:attribute name="co2" type="xs:double" default="0.0">
+			<xs:annotation>
+				<xs:documentation>CO2 emission</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="part" type="xs:double" default="0.0">
+			<xs:annotation>
+				<xs:documentation>Particulate matter emission. This value includes possible particulate matter emissions occurring when generating the energy used for the vehicle during the trip. For example, electric cars will still have a non-zero particulate matter emission although the vehicle doesn't emit anything but the electric energy used by the vehicle might be generated from coal power plants and those created emissions during energy generation.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="partV" type="xs:double" default="0.0">
+			<xs:annotation>
+				<xs:documentation>Particulate matter emission per vehicle. This value contains only the emission generated by the vehicle on this trip. Emissions which were generated during generation of the energy used by the vehicle are ignored by this value.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="nmhc" type="xs:double" default="0.0">
+			<xs:annotation>
+				<xs:documentation>NMHC emission</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="nox" type="xs:double" default="0.0">
+			<xs:annotation>
+				<xs:documentation>NOX emission</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="prime" type="xs:double" default="0.0">
+			<xs:annotation>
+				<xs:documentation>PRIME emission</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="so2" type="xs:double" default="0.0">
+			<xs:annotation>
+				<xs:documentation>SO2 emission</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:element name="Trip">
+		<xs:annotation>
+			<xs:documentation>The element Trip contains a leg list of the computed trip.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence minOccurs="0">
+				<xs:element ref="Messages" minOccurs="0"/>
+				<xs:element name="Eco" type="EcoType" minOccurs="0"/>
+				<xs:element ref="ServiceDays" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="LegList">
+					<xs:annotation>
+						<xs:documentation>The element LegList contains all legs of the computed trip.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="TariffResult" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.Trip"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.Trip">
+		<xs:attribute name="alternative" type="xs:boolean" use="optional" default="false">
+			<xs:annotation>
+				<xs:documentation>The type indicates whether this is an original connection or an realtime alternative.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="valid" type="xs:boolean" use="optional" default="true">
+			<xs:annotation>
+				<xs:documentation>The state indicates if the trip is still possible to ride based on the current realtime situation.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="idx" type="xs:int" use="optional">
+			<xs:annotation>
+				<xs:documentation>The index of this trip in the result list.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="tripId" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>The trip id of this trip in the result list.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ctxRecon" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Information for trip reconstruction.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="duration" type="xs:duration">
+			<xs:annotation>
+				<xs:documentation>The duration of the trip. The first letter indicates if the duration is as planned (P) or if it is based on the realtime situation (R). The remainder of the string contains the duration in format ##DT##H##M. The number before the character 'D' shows the number of days, the number before 'H' the number of hours and the number before 'M' the number of minutes. Each number might be one or two digits. If days or hours don't apply, the number together with the characters 'D' and/or 'H' will be missing.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="return" type="xs:boolean" default="false">
+			<xs:annotation>
+				<xs:documentation>true: indicates the trip is a return journey.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:element name="LegList">
+		<xs:annotation>
+			<xs:documentation>The element LegList contains all legs of the computed trip.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence minOccurs="0" maxOccurs="12">
+				<xs:element ref="Leg"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Leg">
+		<xs:annotation>
+			<xs:documentation>A leg is one part of a trip. It can be either a walk, a bike or car ride or (in most cases) a journey by bus, train or some other means of transport.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Origin"/>
+				<xs:element ref="Destination"/>
+				<xs:element ref="Notes" minOccurs="0"/>
+				<xs:element ref="JourneyDetailRef" minOccurs="0"/>
+				<xs:element ref="GeometryRef" minOccurs="0"/>
+				<xs:element ref="GisRef" minOccurs="0"/>
+				<xs:element name="GisRoute" type="GisRouteType" minOccurs="0"/>
+				<xs:element ref="Messages" minOccurs="0"/>
+				<xs:element ref="JourneyStatus" minOccurs="0"/>
+				<xs:element ref="Product" minOccurs="0"/>
+				<xs:element name="Polyline" type="Polyline" minOccurs="0"/>
+				<xs:element ref="Stops" minOccurs="0"/>
+				<xs:element ref="ServiceDays" minOccurs="0" maxOccurs="unbounded"/>
+
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.Leg"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.Leg">
+		<xs:attribute name="idx" use="required">
+			<xs:annotation>
+				<xs:documentation>Specifies the index of the leg starting from 0 and incrementing by 1.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="name" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>The attribute name specifies the name of the leg (e.g. "Bus 100").</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="number" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>The train number.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="category" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>The train category name. The category assignments are stored in the "zugart" file of the raw Hafas plan data.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="type" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>The attribute type specifies the type of the leg. The value can be the JNY for public transport or WALK, TRSF, BIKE, CAR or TAXI</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="cancelled" type="xs:boolean" use="optional" default="false">
+			<xs:annotation>
+				<xs:documentation>Will be true if this journey is cancelled.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="reachable" type="xs:boolean" use="optional" default="true">
+			<xs:annotation>
+				<xs:documentation>Will be true if this journey is not reachable due to delay of the feeder.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="direction" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Direction information. This will be the name of the last station of the train's journey. Call the JourneyDetail service to get detailed information about the train journey.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="duration" type="xs:duration">
+			<xs:annotation>
+				<xs:documentation>The duration.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="dist" type="xs:int" use="optional">
+			<xs:annotation>
+				<xs:documentation>Distance for this leg in meter.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+
+	<xs:element name="Origin" type="OriginDestType">
+		<xs:annotation>
+			<xs:documentation>Origin of a leg including location name, location type, location route index (if available), departure time and date, realtime departure (if available), track and realtime track (if available).</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Destination" type="OriginDestType">
+		<xs:annotation>
+			<xs:documentation>Destination of a leg including location name, location type, location route index (if available), arrival time and date, realtime arrival time (if available), track and realtime track (if available)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
+	<xs:complexType name="OriginDestType">
+		<xs:sequence>
+			<xs:element ref="Notes" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Contains a list of notes to be displayed for this location, like attributes or footnotes.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attributeGroup ref="attlist.OriginDestType"/>
+	</xs:complexType>
+	<xs:attributeGroup name="attlist.OriginDestType">
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Contains the name of the location.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="type" use="required">
+			<xs:annotation>
+				<xs:documentation>The attribute type specifies the type of location. Valid values are ST (stop/station), ADR (address) or POI (point of interest). This attribute can be used to do some sort of classification in the user interface. For later trip requests it does not have any meaning.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="ST"/>
+					<xs:enumeration value="ADR"/>
+					<xs:enumeration value="POI"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="id" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>ID of this stop</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="extId" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>External ID of this stop</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="lon" type="xs:decimal" use="optional">
+			<xs:annotation>
+				<xs:documentation>The WGS84 longitude of the geographical position.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="lat" type="xs:decimal" use="optional">
+			<xs:annotation>
+				<xs:documentation>The WGS84 latitude of the geographical position.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="routeIdx" type="xs:int" use="optional">
+			<xs:annotation>
+				<xs:documentation>Route index of a stop/station. Can be used as a reference of the stop/station in a journeyDetail response.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="prognosisType" type="PrognosisType" use="optional">
+			<xs:annotation>
+				<xs:documentation>Prognosis type of date and time.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="time" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Time in format HH:MM:SS.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="date" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Date in format YYYY-MM-DD.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="tz" type="xs:int" use="optional" default="0">
+			<xs:annotation>
+				<xs:documentation>Time zone information in the format +/- hours</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="track" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Track information, if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rtTime" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Realtime time in format HH:MM:SS if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rtDate" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Realtime date in format YYYY-MM-DD, if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rtTz" type="xs:int" use="optional" default="0">
+			<xs:annotation>
+				<xs:documentation>Realtime time zone information in the format +/- hours</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rtTrack" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Realtime track information, if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+
+	<!-- GIS stuff -->
+
+	<xs:element name="GisRef">
+		<xs:annotation>
+			<xs:documentation>Reference to individual route of this leg.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="ref" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>Contains a reference to call the ReST interface for GIS route for this leg.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="GisRouteType">
+		<xs:sequence>
+			<xs:element name="seg" type="GisRouteSegment" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="polyline" type="Polyline" minOccurs="0"/>
+			<xs:element name="altPolyline" type="Polyline" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="dist" type="xs:int" use="optional">
+			<xs:annotation>
+				<xs:documentation>Distance for this GIS route in meter.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="durS" type="xs:duration" use="optional">
+			<xs:annotation>
+				<xs:documentation>Duration for this GIS route in seconds.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="durR" type="xs:duration" use="optional">
+			<xs:annotation>
+				<xs:documentation>Duration for this GIS route in seconds based on the realtime situation.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="durST" type="xs:duration" use="optional">
+			<xs:annotation>
+				<xs:documentation>Estimated search time for a parking place in seconds.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="durW2C" type="xs:duration" use="optional">
+			<xs:annotation>
+				<xs:documentation>Estimated walking time from the starting address to the parking place in seconds.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="durW2D" type="xs:duration" use="optional">
+			<xs:annotation>
+				<xs:documentation>Estimated walking time from the destination parking place to the destination address in seconds.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="dirTxt" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Direction text</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="dirGeo" type="xs:int" use="optional">
+			<xs:annotation>
+				<xs:documentation>Geographical direction of the route. The direction range is from 0 to 31 with 0 starting from the x-axis in mathematical positive direction.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="GisRouteSegment">
+		<xs:sequence>
+			<xs:element ref="Notes" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Segment name for display.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rType" type="GisRouteRoadType" use="optional">
+			<xs:annotation>
+				<xs:documentation>Road type for this segment.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="rNum" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Road number if available.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="man" type="GisRouteManoeuvre" use="optional">
+			<xs:annotation>
+				<xs:documentation>Code for the manoeuvre to be executed.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="manTx" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Text description for the manoeuvre</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="dirTx" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Direction text</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ori" type="GisRouteOrientation" use="optional">
+			<xs:annotation>
+				<xs:documentation>Origin</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="polyS" type="xs:int" use="optional">
+			<xs:annotation>
+				<xs:documentation>Starting index into the polyline array.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="polyE" type="xs:int" use="optional">
+			<xs:annotation>
+				<xs:documentation>End index into the polyline array</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="dist" type="xs:int" use="optional">
+			<xs:annotation>
+				<xs:documentation>Distance for this leg in meter.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:simpleType name="GisRouteRoadType">
+		<xs:annotation>
+			<xs:documentation>Type of road.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="U">
+				<xs:annotation>
+					<xs:documentation>Unknown</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="M">
+				<xs:annotation>
+					<xs:documentation>Motorway</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="H">
+				<xs:annotation>
+					<xs:documentation>Highway</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="T">
+				<xs:annotation>
+					<xs:documentation>Trunk road</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="T4L">
+				<xs:annotation>
+					<xs:documentation>Trunk road with four lanes</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="T2L">
+				<xs:annotation>
+					<xs:documentation>Trunk road with two lanes</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TR">
+				<xs:annotation>
+					<xs:documentation>Country road</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NT">
+				<xs:annotation>
+					<xs:documentation>County road</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CT">
+				<xs:annotation>
+					<xs:documentation>City road</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="R">
+				<xs:annotation>
+					<xs:documentation>Residential road</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="B">
+				<xs:annotation>
+					<xs:documentation>Blocked road</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CW">
+				<xs:annotation>
+					<xs:documentation>Combined cycle and walkway</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="C">
+				<xs:annotation>
+					<xs:documentation>Cycleway</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="W">
+				<xs:annotation>
+					<xs:documentation>Walkway</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F">
+				<xs:annotation>
+					<xs:documentation>Ferry</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GisRouteManoeuvre">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NO">
+				<xs:annotation>
+					<xs:documentation>Not set</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FR">
+				<xs:annotation>
+					<xs:documentation>From</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TO">
+				<xs:annotation>
+					<xs:documentation>To</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ON">
+				<xs:annotation>
+					<xs:documentation>On</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LE">
+				<xs:annotation>
+					<xs:documentation>Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RI">
+				<xs:annotation>
+					<xs:documentation>Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KL">
+				<xs:annotation>
+					<xs:documentation>Keep left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KR">
+				<xs:annotation>
+					<xs:documentation>Keep right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HL">
+				<xs:annotation>
+					<xs:documentation>Half left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HR">
+				<xs:annotation>
+					<xs:documentation>Half right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KHL">
+				<xs:annotation>
+					<xs:documentation>Keep half left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KHR">
+				<xs:annotation>
+					<xs:documentation>Keep half right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SL">
+				<xs:annotation>
+					<xs:documentation>Sharp left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SR">
+				<xs:annotation>
+					<xs:documentation>Sharp right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KSL">
+				<xs:annotation>
+					<xs:documentation>Keep sharp left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KSR">
+				<xs:annotation>
+					<xs:documentation>Keep sharp right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ST">
+				<xs:annotation>
+					<xs:documentation>Straight</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="UT">
+				<xs:annotation>
+					<xs:documentation>U-Turn</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EN">
+				<xs:annotation>
+					<xs:documentation>Enter</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LV">
+				<xs:annotation>
+					<xs:documentation>Leave</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ER">
+				<xs:annotation>
+					<xs:documentation>Enter roundabout</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SIR">
+				<xs:annotation>
+					<xs:documentation>Stay in roundabout</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LR">
+				<xs:annotation>
+					<xs:documentation>Leave roundabout</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EF">
+				<xs:annotation>
+					<xs:documentation>Enter ferry</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LF">
+				<xs:annotation>
+					<xs:documentation>Leave ferry</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CH">
+				<xs:annotation>
+					<xs:documentation>Change highway</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CIF">
+				<xs:annotation>
+					<xs:documentation>Check-in ferry</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="COF">
+				<xs:annotation>
+					<xs:documentation>Check-out ferry</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GisRouteOrientation">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="U">
+				<xs:annotation>
+					<xs:documentation>Unknown</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="N">
+				<xs:annotation>
+					<xs:documentation>North</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="S">
+				<xs:annotation>
+					<xs:documentation>South</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="E">
+				<xs:annotation>
+					<xs:documentation>East</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="W">
+				<xs:annotation>
+					<xs:documentation>West</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NE">
+				<xs:annotation>
+					<xs:documentation>Northeast</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SE">
+				<xs:annotation>
+					<xs:documentation>Southeast</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NW">
+				<xs:annotation>
+					<xs:documentation>Northwest</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SW">
+				<xs:annotation>
+					<xs:documentation>Southwest</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- fares stuff -->
+
+	<xs:element name="TariffResult">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="fareSetItem" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="fareSetItem">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ticketParam" type="KVType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="fareItem" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string"/>
+			<xs:attribute name="desc" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="fareItem">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ticket" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string"/>
+			<xs:attribute name="desc" type="xs:string"/>
+			<xs:attribute name="price" type="xs:int" default="0"/>
+			<xs:attribute name="cur" type="xs:string"/>
+			<xs:attribute name="shpCtx" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="ticket">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ticketParam" type="KVType" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string"/>
+			<xs:attribute name="desc" type="xs:string"/>
+			<xs:attribute name="price" type="xs:int" default="0"/>
+			<xs:attribute name="cur" type="xs:string"/>
+			<xs:attribute name="shpCtx" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="KVType">
+		<xs:attribute name="name" type="xs:string"/>
+		<xs:attribute name="value" type="xs:string"/>
+	</xs:complexType>
+
+</xs:schema>
