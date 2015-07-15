@@ -384,6 +384,7 @@ The following attributes are **special to `Departure`**. `timeAtArrival` and `da
 ## other stuff
 
 *todo: `Geometry`, `Polyline`, `CoordType`, `GisRef`, `GisRouteType`*
+
 *todo: link to [fares stuff](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L1951) in XSD file*
 
 
@@ -393,7 +394,7 @@ The following attributes are **special to `Departure`**. `timeAtArrival` and `da
 
 > Contains a text with notes to be displayed for this leg, like attributes or footnotes.
 
-The `Notes` element contains any number of [`Note` elements](#todo)**.
+The `Notes` element contains any number of [`Note` elements](#todo).
 
 
 
@@ -418,13 +419,13 @@ The `Note` element has the following attributes. **Its (text) content is a [`str
 
 > Reference to journey details of this leg.
 
-*@HaCON this is weird!*
-
 The `JourneyDetailRef` element has the following attribute.
 
 | attribute | use | type | description |
 |:----------|:----|:-----|:------------|
 | `ref` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Contains a URL to call the ReST interface for [journey details](#todo). |
+
+*@HaCON this is weird!*
 
 
 
