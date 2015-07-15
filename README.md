@@ -388,6 +388,64 @@ The following attributes are **special to `Departure`**. `timeAtArrival` and `da
 
 
 
+
+### [`Notes`](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L377)
+
+> Contains a text with notes to be displayed for this leg, like attributes or footnotes.
+
+The `Notes` element contains any number of [`Note` elements](#todo)**.
+
+
+
+#### [`Note`](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L383)
+
+> [The] Note to be displayed
+
+The `Note` element has the following attributes. **Its (text) content is a [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string).**
+
+| attribute | use | type | description |
+|:----------|:----|:-----|:------------|
+| `key` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | An identifier of this note. The identifier is composed of a two letter combination further identifying the content of the note. |
+| `type` | opt. | *[`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string)-based*; `U` / `A` / `I` / `R` / `H` | *Default: `U`* The type of this note. Unknown: `U`. Attribute: `A`. Infotext: `I`. Realtime: `R`. Hint: `H`. |
+| `priority` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | The priority of this note. A lower priority value means a higher importance. A priority with value `-1` means priority is undefined. |
+| `routeIdxFrom` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | First stop/station where this note is valid. See the [`Stops` list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
+| `routeIdxTo` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Last stop/station where this note is valid. See the [`Stops` list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
+
+
+
+
+### [`JourneyDetailRef`](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L594)
+
+> Reference to journey details of this leg.
+
+*@HaCON this is weird!*
+
+The `JourneyDetailRef` element has the following attribute.
+
+| attribute | use | type | description |
+|:----------|:----|:-----|:------------|
+| `ref` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Contains a URL to call the ReST interface for [journey details](#todo). |
+
+
+
+
+### [`prognosisType`](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L609) (attribute)
+
+> `PrognosisType` provides the type of the prognosis like if the prognosis was reported by an external provider or calculated or corrected by the system.
+
+`PrognosisType`'s **(text) content** is a [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) and *must* be **one of the following values**.
+
+| value | description |
+|:------|:------------|
+| `PROGNOSED` | [The] Prognosis was reported from an external provider as a prognosis for the future. |
+| `MANUAL` | [The] Prognosis was reported from an external provider from a manual entry. |
+| `REPORTED` | [The] Prognosis was reported from an external provider as a delay for previously passed stations. |
+| `CORRECTED` | [The] Prognosis was corrected by the system to adjust the prognoses over the train's journey to ensure proper continuation. |
+| `CALCULATED` | [The] Prognosis was calculated by the system for upcoming stations or to fill gaps for previously passed stations where no delay was reported. |
+
+
+
+
 ### [`Error`](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L34)
 
 > This element represents the response in case of any error
