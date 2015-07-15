@@ -227,6 +227,8 @@ The `Direction` element has the following attributes. **Its (text) content is a 
 
 The `Messages` element contains any number of [`Message` elements](#todo)**.
 
+*todo: move this to [other stuff](#todo)*
+
 
 ##### [`Message`](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L1040)
 
@@ -234,6 +236,7 @@ The `Messages` element contains any number of [`Message` elements](#todo)**.
 
 The `Message` element has the following attributes. **Its (text) content is a [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string).**
 
+*todo: move this to [other stuff](#todo)*
 
 *todo: what the hell is this?*
 
@@ -364,8 +367,24 @@ The following attributes are **special to `Departure`**. `timeAtArrival` and `da
 
 
 
+
+## trip service
+
+*todo: difference to [trip service](#todo)?*
+*todo: what is the purpose?*
+
+*todo*
+
+
+
+
+
+
+
 ## other stuff
 
+*todo: `Geometry`, `Polyline`, `CoordType`, `GisRef`, `GisRouteType`*
+*todo: link to [fares stuff](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L1951) in XSD file*
 
 
 
