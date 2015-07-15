@@ -6,6 +6,8 @@ This document describes the general structure of all responses of the HAFAS syst
 
 I was looking for a detailed description of the VBB API, and out of sheer desperation, it created this document. **Please help me keep it up to date**, since it's a relatively small effort just adjusting this to new API versions.
 
+If you want to find out which public transport services use HAFAS and what their API endpoints and customizations are, [head over to the great *Public Transport Enabler*](https://github.com/schildbach/public-transport-enabler/tree/master/enabler/src/de/schildbach/pte).
+
 - [location service](#location-service)
 - [journey service](#journey-service)
 - [arrival & departure service](#arrival--departure-service)
@@ -423,7 +425,7 @@ The `JourneyDetailRef` element has the following attribute.
 
 | attribute | use | type | description |
 |:----------|:----|:-----|:------------|
-| `ref` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Contains a URL to call the ReST interface for [journey details](#journeydetails). |
+| `ref` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Contains a URL to call the ReST interface for [journey details](#journeydetail). |
 
 *@HaCON this is weird!*
 
