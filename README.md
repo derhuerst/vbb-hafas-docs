@@ -6,7 +6,7 @@ This document describes the general structure of all responses of the HAFAS syst
 
 I was looking for a detailed description of the VBB API, and out of sheer desperation, it created this document. **Please help me keep it up to date**, since it's a relatively small effort just adjusting this to new API versions.
 
-If you want to find out which public transport services use HAFAS and what their API endpoints and customizations are, [head over to the great *Public Transport Enabler*](https://github.com/schildbach/public-transport-enabler/tree/master/enabler/src/de/schildbach/pte).
+If you want to find out which public transport services use HAFAS and what their API endpoints and customizations are, [head over to the great *Public Transport Enabler*](https://github.com/schildbach/public-transport-enabler/tree/master/enabler/src/de/schildbach/pte) or to the [List of HAFAS API endpoints](https://gist.github.com/derhuerst/2b7ed83bfa5f115125a5) (work in progress).
 
 - [location service](#location-service)
 - [journey service](#journey-service)
