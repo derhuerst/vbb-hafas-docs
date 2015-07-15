@@ -17,7 +17,7 @@ This service can be used to find stations/stops, addresses and points of interes
 
 
 
-### `LocationList` (element)
+### [`LocationList` (element)](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L45)
 
 > The location list contains either named coordinates or stops/stations with name and id as a result of a location request. The data of every list entry can be used for further trip or departureBoard requests.
 
@@ -25,8 +25,7 @@ The `LocationList` element contains one or more [`StopLocation`](#todo) or [`Coo
 
 
 
-
-### `StopLocation` (element)
+#### [`StopLocation` (element)](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L57)
 
 > The element `StopLocation` specifies a stop/station in a result of a location request.
 
@@ -49,8 +48,7 @@ The `StopLocation` element has the following attributes.
 
 
 
-
-### `CoordLocation` (element)
+#### [`CoordLocation` (element)](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L125)
 
 > The element `CoordLocation` specifies a coordinate based location in a result of a location request. It contains an output name, latitude, longitude and a type (address or point of interest). The coordinates and the name can be used as origin or destination parameters to perform a trip request.
 
@@ -68,14 +66,12 @@ The `CoordLocation` element has the following attributes.
 
 
 
-
-### `LocationNotes` (element)
+#### [`LocationNotes` (element)](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L173)
 
 > Contains […][any number of] [notes](#todo) to be displayed for this location.
 
 
-
-#### `LocationNote` (element)
+##### [`LocationNote` (element)](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L187)
 
 > Text to be displayed
 
@@ -98,7 +94,7 @@ todo: what is the purpose?
 
 
 
-### `JourneyDetail` (element)
+### [`JourneyDetail` (element)](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L796)
 
 > The journey details contain a list of stops/stations and notes. They also contain the journeys names and types.
 
@@ -116,14 +112,14 @@ todo: what is the purpose?
 
 
 
-#### `Stops` (element)
+#### [`Stops` (element)](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L819)
 
 > The list of [journey stops/stations](#todo).
 
 The `Stops` element **contains *two* or more [`Stop` elements](#todo)**.
 
 
-##### `Stop` (element)
+##### [`Stop` (element)](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L825)
 
 > The element `Stop` contains the name of the stop/station, the route index, the latitude, the longitude, the departure time and date, the arrival time and date, the track, the realtime departure time and date, the realtime arrival time and date and the realtime track.
 
@@ -161,7 +157,7 @@ The `Stop` element has the following attributes.
 
 
 
-#### `GeometryRef` (element)
+#### [`GeometryRef` (element)](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L1094)
 
 > Reference to polyline of this leg.
 
@@ -173,14 +169,14 @@ The `GeometryRef` element has the following attributes.
 
 
 
-#### `Names` (element)
+#### [`Names` (element)](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L1106)
 
 > The list of [journey names](#todo).
 
 The `Names` element contains any number of [`Name` elements](#todo).
 
 
-##### `Name` (element)
+##### [`Name` (element)](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L1112)
 
 > Contains [the] name of [the] journey.
 
@@ -198,14 +194,14 @@ The `Name` element contains any number of [`Product` elements](#todo). It has th
 
 
 
-#### `Directions` (element)
+#### [`Directions` (element)](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L1000)
 
 > The list of [journey directions](#todo).
 
 The `Directions` element contains any number of [`Direction` elements](#todo)**.
 
 
-##### `Direction` (element)
+##### [`Direction` (element)](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L1006)
 
 > Direction information. This is usually the last stop of the journey.
 
@@ -218,14 +214,14 @@ The `Direction` element has the following attributes. **Its (text) content is a 
 
 
 
-#### `Messages` (element)
+#### [`Messages` (element)](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L1034)
 
 > Contains […][messages](#todo) to be displayed for this trip.
 
 The `Messages` element contains any number of [`Message` elements](#todo)**.
 
 
-##### `Message` (element)
+##### [`Message` (element)](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L1040)
 
 > Text to be displayed
 
@@ -250,7 +246,7 @@ The `Message` element has the following attributes. **Its (text) content is a `x
 
 
 
-#### `JourneyStatus` (element)
+#### [`JourneyStatus` (element)](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L1153)
 
 > Contains the status of the journey.
 
@@ -265,7 +261,7 @@ The `Message` element has the following attributes. **Its (text) content is a `x
 
 
 
-#### `ServiceDays` (element)
+#### [`ServiceDays` (element)](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L1182)
 
 > *Regular* service days ([…] [on which] the train has a *regular* schedule)[…].
 
@@ -294,7 +290,7 @@ The `ServiceDays` element defines *regular* and *irregular* services days. It ha
 
 
 
-### `Error` (element)
+### [`Error` (element)](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L34)
 
 > This element represents the response in case of any error
 
@@ -304,7 +300,7 @@ The `ServiceDays` element defines *regular* and *irregular* services days. It ha
 
 
 
-## common attributes
+## [common attributes](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L6)
 
 
 | attribute | type | description |
