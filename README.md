@@ -80,7 +80,7 @@ The `CoordLocation` element has the following attributes.
 
 ##### [`LocationNote`](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L187)
 
-> Text to be displayed
+> [The] Text to be displayed
 
 The `LocationNote` element has the following attributes. **Its (text) content is a [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string).**
 
@@ -230,7 +230,7 @@ The `Messages` element contains any number of [`Message` elements](#todo)**.
 
 ##### [`Message`](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L1040)
 
-> Text to be displayed
+> [The] Text to be displayed
 
 The `Message` element has the following attributes. **Its (text) content is a [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string).**
 
@@ -246,10 +246,10 @@ The `Message` element has the following attributes. **Its (text) content is a [`
 | `lead` (required) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
 | `text` (required) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
 | `tckr` (required) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
-| `priority` (required) | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | *@VBB @HaCon what is this??* |
+| `priority` (required) | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | The priority of this message. A lower priority value means a higher importance. A priority with value `-1` means priority is undefined. |
 | `icon` | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
-| `routeIdxFrom` (optional) | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | First stop/station where this message is valid. See the [Stops list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
-| `routeIdxTo` (optional) | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Last stop/station where this message is valid. See the [Stops list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
+| `routeIdxFrom` (optional) | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | First stop/station where this message is valid. See the [`Stops` list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
+| `routeIdxTo` (optional) | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Last stop/station where this message is valid. See the [`Stops` list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
 
 
 
@@ -285,8 +285,8 @@ The `ServiceDays` element defines *regular* and *irregular* services days. It ha
 | `sDaysR` (optional) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *Regular* service days ([…] [on which] the train has a *regular* schedule)[…]. |
 | `sDaysI` (optional) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *Irregular* service days for this trip ([…] [on which] the train has a *different* schedule)[…]. |
 | `sDaysB` (optional) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
-| `routeIdxFrom` (optional) | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | First stop/station where this […][service rule] is valid. See the [Stops list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
-| `routeIdxTo` (optional) | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Last stop/station where this […][service rule] is valid. See the [Stops list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
+| `routeIdxFrom` (optional) | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | First stop/station where this […][service rule] is valid. See the [`Stops` list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
+| `routeIdxTo` (optional) | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Last stop/station where this […][service rule] is valid. See the [`Stops` list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
 
 
 
