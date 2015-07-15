@@ -310,3 +310,22 @@ The `ServiceDays` element defines *regular* and *irregular* services days. It ha
 | `version` (optional) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | The data version in the HAFAS server which was used to calculate that result. |
 | `errorCode` (optional) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | If the request fails, then the errorCode is filled. |
 | `errorText` (optional) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | If the request fails, then the errorText is filled. |
+
+
+
+
+
+
+
+## critique
+
+*Disclaimer: My viewpoint might be relatively superficial (since I'm not a co-author of HAFAS), maybe even arrogant. But at least these are the questions and hurdles I have had to fight with, so please consider making this API truly developer-friendly.*
+
+The structures of `Stops`, `Arrival` and `Departure` all look very similar. Why not unify them into `Stops` with a `role`/`action` attribute (with the values `enterTrain`, `stop`, `changeTrain` and `leaveTrain`)?
+
+`Arrival` and `Departure` as well as `ArrivalBoard` and `DepartureBoard` could easily be unified.
+ Again, a single attribute could give enough context.
+
+I think the `GeometryRef` and `GisRef` stuff is too loosely related to the purpose of this API. Get rid of it and move to its own API endpoint.
+
+And finally: Please please please provide XML *and* JSON *consistently* on *all* API endpoints!
