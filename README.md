@@ -88,8 +88,8 @@ The `LocationNote` element has the following attributes. **Its (text) content is
 
 ## journey service
 
-todo: difference to trip service?
-todo: what is the purpose?
+*todo: difference to trip service?*
+*todo: what is the purpose?*
 
 
 
@@ -231,16 +231,16 @@ The `Message` element has the following attributes. **Its (text) content is a [`
 
 | attribute | type | description |
 |:----------|:-----|:------------|
-| `id` (required) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *todo: document this* |
-| `type` (required) | *[`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string)-based*; `UNDEF` / `JNY` / `ROU` / `LIN` / `REG` / `CNTY` / `GLOB` / `LOC` / `FOOT` / `HEAD` / `PSGR` / `IFRA` | *todo: document this* |
-| `act` (required) | [`xs:boolean`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#boolean) | *todo: document this* |
-| `pub` (required) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *todo: document this* |
-| `head` (required) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *todo: document this* |
-| `lead` (required) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *todo: document this* |
-| `text` (required) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *todo: document this* |
-| `tckr` (required) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *todo: document this* |
-| `priority` (required) | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | *todo: document this* |
-| `icon` | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *todo: document this* |
+| `id` (required) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
+| `type` (required) | *[`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string)-based*; `UNDEF` / `JNY` / `ROU` / `LIN` / `REG` / `CNTY` / `GLOB` / `LOC` / `FOOT` / `HEAD` / `PSGR` / `IFRA` | *@VBB @HaCon what is this??* |
+| `act` (required) | [`xs:boolean`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#boolean) | *@VBB @HaCon what is this??* |
+| `pub` (required) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
+| `head` (required) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
+| `lead` (required) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
+| `text` (required) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
+| `tckr` (required) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
+| `priority` (required) | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | *@VBB @HaCon what is this??* |
+| `icon` | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
 | `routeIdxFrom` (optional) | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | First stop/station where this message is valid. See the [Stops list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
 | `routeIdxTo` (optional) | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Last stop/station where this message is valid. See the [Stops list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
 
@@ -277,7 +277,7 @@ The `ServiceDays` element defines *regular* and *irregular* services days. It ha
 | `planningPeriodEnd` (optional) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | End of the planning period of this data in format `YYYY-MM-DD`. |
 | `sDaysR` (optional) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *Regular* service days ([…] [on which] the train has a *regular* schedule)[…]. |
 | `sDaysI` (optional) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *Irregular* service days for this trip ([…] [on which] the train has a *different* schedule)[…]. |
-| `sDaysB` (optional) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *todo: document this* |
+| `sDaysB` (optional) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
 | `routeIdxFrom` (optional) | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | First stop/station where this […][service rule] is valid. See the [Stops list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
 | `routeIdxTo` (optional) | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Last stop/station where this […][service rule] is valid. See the [Stops list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
 
