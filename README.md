@@ -488,4 +488,10 @@ And finally: **Please please please provide XML *and* JSON *consistently* on *al
 
 ### rather unimportant stuff
 
+For the sake of consistency with `Arrival`'s `timeAtOrigin`, rename `Departure`'s attribute `timeAtArrival` `timeAtDestination`.
+
+**`LocationNote` and `Note` (and maybe even `Message`) can be unified.**
+
+Please take care of `JourneyDetailRef`!
+
 I think the `GeometryRef` and `GisRef` stuff is too loosely related to the purpose of this API. Get rid of it and move to its own API endpoint.
