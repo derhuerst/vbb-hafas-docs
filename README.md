@@ -42,16 +42,16 @@ The `StopLocation` element has the following attributes.
 
 | attribute | use | type | description |
 |:----------|:----|:-----|:------------|
-| `id` | req. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | This ID can either be used as `originId` or `destId` to perform a trip request or to call a departure or arrival board. |
-| `extId` | req. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | This ID defines an alternative ID for this stop location and can not be used to perform further requests. |
-| `name` | req. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Contains the output name of this stop or station |
-| `lon` | opt. | [`xs:decimal`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#decimal) | The [WGS84](https://de.wikipedia.org/wiki/World_Geodetic_System_1984) longitude of the geographical position of the stop/station. |
-| `lat` | opt. | [`xs:decimal`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#decimal) | The [WGS84](https://de.wikipedia.org/wiki/World_Geodetic_System_1984) latitude of the geographical position of the stop/station. |
-| `track` | opt. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Track information, if available. |
-| `weight` | opt. | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | This value specifies some kind of importance of this stop. The more traffic at this stop the higher the weight. The range is between 0 and 32767. This attribute is only available in the location.allstops response |
-| `dist` | | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | This value specifies the distance to the given coordinate if called by a [nearby search request](#todo). |
-| `products` | | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | This value specifies the [products](#todo) available at this location. |
-| `meta` | | [`xs:boolean`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#boolean) | True, if the stop is a meta stop. *todo: what is a meta stop?* |
+| `id` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | This ID can either be used as `originId` or `destId` to perform a trip request or to call a departure or arrival board. |
+| `extId` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | This ID defines an alternative ID for this stop location and can not be used to perform further requests. |
+| `name` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Contains the output name of this stop or station |
+| `lon` | opt. | [`decimal`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#decimal) | The [WGS84](https://de.wikipedia.org/wiki/World_Geodetic_System_1984) longitude of the geographical position of the stop/station. |
+| `lat` | opt. | [`decimal`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#decimal) | The [WGS84](https://de.wikipedia.org/wiki/World_Geodetic_System_1984) latitude of the geographical position of the stop/station. |
+| `track` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Track information, if available. |
+| `weight` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | This value specifies some kind of importance of this stop. The more traffic at this stop the higher the weight. The range is between 0 and 32767. This attribute is only available in the location.allstops response |
+| `dist` | | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | This value specifies the distance to the given coordinate if called by a [nearby search request](#todo). |
+| `products` | | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | This value specifies the [products](#todo) available at this location. |
+| `meta` | | [`boolean`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#boolean) | True, if the stop is a meta stop. *todo: what is a meta stop?* |
 
 
 
@@ -65,11 +65,11 @@ The `CoordLocation` element has the following attributes.
 
 | attribute | use | type | description |
 |:----------|:----|:-----|:------------|
-| `name` | req. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Contains the output name of the address or point of interest |
-| `type` | req. | *[`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string)-based*; `ADR` / `POI` | The attribute type specifies the type of location. Valid values are `ADR` (address) or `POI` (point of interest). This attribute can be used to do some sort of classification in the user interface. For later trip requests it does not have any meaning. |
-| `lon` | opt. | [`xs:decimal`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#decimal) | The [WGS84](https://de.wikipedia.org/wiki/World_Geodetic_System_1984) longitude of the geographical position of the stop/station. |
-| `lat` | opt. | [`xs:decimal`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#decimal) | The [WGS84](https://de.wikipedia.org/wiki/World_Geodetic_System_1984) latitude of the geographical position of the stop/station. |
-| `dist` | opt. | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | This value specifies the distance to the given coordinate if called by a nearby search request. |
+| `name` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Contains the output name of the address or point of interest |
+| `type` | req. | *[`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string)-based*; `ADR` / `POI` | The attribute type specifies the type of location. Valid values are `ADR` (address) or `POI` (point of interest). This attribute can be used to do some sort of classification in the user interface. For later trip requests it does not have any meaning. |
+| `lon` | opt. | [`decimal`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#decimal) | The [WGS84](https://de.wikipedia.org/wiki/World_Geodetic_System_1984) longitude of the geographical position of the stop/station. |
+| `lat` | opt. | [`decimal`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#decimal) | The [WGS84](https://de.wikipedia.org/wiki/World_Geodetic_System_1984) latitude of the geographical position of the stop/station. |
+| `dist` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | This value specifies the distance to the given coordinate if called by a nearby search request. |
 
 
 
@@ -82,12 +82,12 @@ The `CoordLocation` element has the following attributes.
 
 > [The] Text to be displayed
 
-The `LocationNote` element has the following attributes. **Its (text) content is a [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string).**
+The `LocationNote` element has the following attributes. **Its (text) content is a [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string).**
 
 | attribute | use | type | description |
 |:----------|:----|:-----|:------------|
-| `key` | opt. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | An identifier of this note. The identifier is composed of a two letter combination further identifying the content of the note. |
-| `type` | opt. | *[`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string)-based*; `U` / `A` / `I` / `R` / `H` | *Default: `U`* The type of this note. Unknown: `U`. Attribute: `A`. Infotext: `I`. Realtime: `R`. Hint: `H`. |
+| `key` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | An identifier of this note. The identifier is composed of a two letter combination further identifying the content of the note. |
+| `type` | opt. | *[`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string)-based*; `U` / `A` / `I` / `R` / `H` | *Default: `U`* The type of this note. Unknown: `U`. Attribute: `A`. Infotext: `I`. Realtime: `R`. Hint: `H`. |
 
 
 
@@ -95,7 +95,7 @@ The `LocationNote` element has the following attributes. **Its (text) content is
 
 ## journey service
 
-*todo: difference to trip service?*
+*todo: difference to [trip service](#todo)?*
 *todo: what is the purpose?*
 
 
@@ -136,31 +136,31 @@ The `Stop` element has the following attributes.
 
 | attribute | use | type | description |
 |:----------|:----|:-----|:------------|
-| `name` | req. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Contains the name of this stop/station. |
-| `id` | req. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Contains the ID of the stop/station. |
-| `extId` | req. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Contains the external ID of the stop/station. [This ID defines an alternative ID for this stop/station and can not be used to perform further requests.] |
-| `routeIdx` | opt. | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Route index of a stop/station. Usually starting from `0` and incrementing by `1`. If the route index value jumps, it is most likely that the journey was rerouted. |
-| `lon` | opt. | [`xs:decimal`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#decimal) | The [WGS84](https://de.wikipedia.org/wiki/World_Geodetic_System_1984) longitude of the geographical position of the stop/station. |
-| `lat` | opt. | [`xs:decimal`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#decimal) | The [WGS84](https://de.wikipedia.org/wiki/World_Geodetic_System_1984) latitude of the geographical position of the stop/station. |
+| `name` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Contains the name of this stop/station. |
+| `id` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Contains the ID of the stop/station. |
+| `extId` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Contains the external ID of the stop/station. [This ID defines an alternative ID for this stop/station and can not be used to perform further requests.] |
+| `routeIdx` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Route index of a stop/station. Usually starting from `0` and incrementing by `1`. If the route index value jumps, it is most likely that the journey was rerouted. |
+| `lon` | opt. | [`decimal`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#decimal) | The [WGS84](https://de.wikipedia.org/wiki/World_Geodetic_System_1984) longitude of the geographical position of the stop/station. |
+| `lat` | opt. | [`decimal`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#decimal) | The [WGS84](https://de.wikipedia.org/wiki/World_Geodetic_System_1984) latitude of the geographical position of the stop/station. |
 | `arrPrognosisType` | opt. | [`PrognosisType`](#todo) | Prognosis type of arrival date and time. |
 | `depPrognosisType` | opt. | [`PrognosisType`](#todo) | Prognosis type of departure date and time. |
-| `cancelled` | opt. | [`xs:boolean`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#boolean) | *Default: `false`* Will be `true` if this journey is cancelled. |
+| `cancelled` | opt. | [`boolean`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#boolean) | *Default: `false`* Will be `true` if this journey is cancelled. |
 
 **The date, time and track information** provided by the following attributes **is also available as real time data**. **These real time data attributes** work in the same way but **have `rt` in front** (`depTrack` -> `rtDepTrack`).
 
 | attribute | use | type | description |
 |:----------|:----|:-----|:------------|
-| `arrTrack` | opt. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Arrival track information, if available. |
-| `arrTime` | opt. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Arrival time in format `HH:MM:SS`, if available. |
-| `arrDate` | opt. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Arrival date in format `YYYY-MM-DD`, if available. |
-| `arrTz` | opt. | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Arrival time zone information in the format […][`+H` or `-H`]. |
-| `depTrack` | opt. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Departure track information, if available. |
-| `depTime` | opt. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Departure time in format `HH:MM:SS`, if available. |
-| `depDate` | opt. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Departure date in format `YYYY-MM-DD`, if available. |
-| `depTz` | opt. | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Departure time zone information in the format […][`+H` or `-H`]. |
-| `passingTime` | opt. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Passing time in format `HH:MM:SS`, if available. *todo: what is this?* |
-| `passingDate` | opt. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Passing date in format `YYYY-MM-DD`, if available. *todo: what is this?* |
-| `passingTz` | opt. | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Passing time zone information in the format […][`+H` or `-H`]. *todo: what is this?* |
+| `arrTrack` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Arrival track information, if available. |
+| `arrTime` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Arrival time in format `HH:MM:SS`, if available. |
+| `arrDate` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Arrival date in format `YYYY-MM-DD`, if available. |
+| `arrTz` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Arrival time zone information in the format […][`+H` or `-H`]. |
+| `depTrack` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Departure track information, if available. |
+| `depTime` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Departure time in format `HH:MM:SS`, if available. |
+| `depDate` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Departure date in format `YYYY-MM-DD`, if available. |
+| `depTz` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Departure time zone information in the format […][`+H` or `-H`]. |
+| `passingTime` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Passing time in format `HH:MM:SS`, if available. *todo: what is this?* |
+| `passingDate` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Passing date in format `YYYY-MM-DD`, if available. *todo: what is this?* |
+| `passingTz` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Passing time zone information in the format […][`+H` or `-H`]. *todo: what is this?* |
 
 
 
@@ -172,7 +172,7 @@ The `GeometryRef` element has the following attributes.
 
 | attribute | use | type | description |
 |:----------|:----|:-----|:------------|
-| `ref` | req. | *todo: is it[`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string)?* | Contains a URL to call the ReST interface for geometry of this journey. |
+| `ref` | req. | *todo: is it[`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string)?* | Contains a URL to call the ReST interface for geometry of this journey. |
 
 
 
@@ -193,11 +193,11 @@ The `Name` element contains any number of [`Product` elements](#todo). It has th
 
 | attribute | use | type | description |
 |:----------|:----|:-----|:------------|
-| `name` | req. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Name to be displayed. |
-| `number` | req. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | The train number. *todo: why isn't this an `xs:number`?* |
-| `category` | req. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | The train category. |
-| `routeIdxFrom` | req. | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Defines the first stop/station where this name is valid. See the [Stops list](#todo) for details of the stop/station. |
-| `routeIdxTo` | req. | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Defines the last stop/station where this name is valid. See the [Stops list](#todo) for details of the stop/station. |
+| `name` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Name to be displayed. |
+| `number` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | The train number. *todo: why isn't this an `number`?* |
+| `category` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | The train category. |
+| `routeIdxFrom` | req. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Defines the first stop/station where this name is valid. See the [Stops list](#todo) for details of the stop/station. |
+| `routeIdxTo` | req. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Defines the last stop/station where this name is valid. See the [Stops list](#todo) for details of the stop/station. |
 
 
 
@@ -212,12 +212,12 @@ The `Directions` element contains any number of [`Direction` elements](#todo)**.
 
 > Direction information. This is usually the last stop of the journey.
 
-The `Direction` element has the following attributes. **Its (text) content is a [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string).**
+The `Direction` element has the following attributes. **Its (text) content is a [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string).**
 
 | attribute | use | type | description |
 |:----------|:----|:-----|:------------|
-| `routeIdxFrom` | req. | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Defines the first stop/station where this type is valid. See the [Stops list](#todo) for details of the stop/station. |
-| `routeIdxTo` | req. | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Defines the last stop/station where this type is valid. See the [Stops list](#todo) for details of the stop/station. |
+| `routeIdxFrom` | req. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Defines the first stop/station where this type is valid. See the [Stops list](#todo) for details of the stop/station. |
+| `routeIdxTo` | req. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Defines the last stop/station where this type is valid. See the [Stops list](#todo) for details of the stop/station. |
 
 
 
@@ -232,24 +232,25 @@ The `Messages` element contains any number of [`Message` elements](#todo)**.
 
 > [The] Text to be displayed
 
-The `Message` element has the following attributes. **Its (text) content is a [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string).**
+The `Message` element has the following attributes. **Its (text) content is a [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string).**
+
 
 *todo: what the hell is this?*
 
 | attribute | use | type | description |
 |:----------|:----|:-----|:------------|
-| `id` | req. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
-| `type` | req. | *[`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string)-based*; `UNDEF` / `JNY` / `ROU` / `LIN` / `REG` / `CNTY` / `GLOB` / `LOC` / `FOOT` / `HEAD` / `PSGR` / `IFRA` | *@VBB @HaCon what is this??* |
-| `act` | req. | [`xs:boolean`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#boolean) | *@VBB @HaCon what is this??* |
-| `pub` | req. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
-| `head` | req. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
-| `lead` | req. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
-| `text` | req. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
-| `tckr` | req. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
-| `priority` | req. | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | The priority of this message. A lower priority value means a higher importance. A priority with value `-1` means priority is undefined. |
-| `icon` | | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
-| `routeIdxFrom` | opt. | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | First stop/station where this message is valid. See the [`Stops` list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
-| `routeIdxTo` | opt. | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Last stop/station where this message is valid. See the [`Stops` list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
+| `id` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
+| `type` | req. | *[`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string)-based*; `UNDEF` / `JNY` / `ROU` / `LIN` / `REG` / `CNTY` / `GLOB` / `LOC` / `FOOT` / `HEAD` / `PSGR` / `IFRA` | *@VBB @HaCon what is this??* |
+| `act` | req. | [`boolean`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#boolean) | *@VBB @HaCon what is this??* |
+| `pub` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
+| `head` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
+| `lead` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
+| `text` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
+| `tckr` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
+| `priority` | req. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | The priority of this message. A lower priority value means a higher importance. A priority with value `-1` means priority is undefined. |
+| `icon` | | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
+| `routeIdxFrom` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | First stop/station where this message is valid. See the [`Stops` list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
+| `routeIdxTo` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Last stop/station where this message is valid. See the [`Stops` list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
 
 
 
@@ -257,7 +258,7 @@ The `Message` element has the following attributes. **Its (text) content is a [`
 
 > Contains the status of the journey.
 
-`JourneyStatus`'s **(text) content** is [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string)-based and *must* be **one of the following values**.
+`JourneyStatus`'s **(text) content** is [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string)-based and *must* be **one of the following values**.
 
 | value | description |
 |:------|:------------|
@@ -280,13 +281,13 @@ The `ServiceDays` element defines *regular* and *irregular* services days. It ha
 
 | attribute | use | type | description |
 |:----------|:----|:-----|:------------|
-| `planningPeriodBegin` | opt. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Start of the planning period of this data in format `YYYY-MM-DD`. |
-| `planningPeriodEnd` | opt. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | End of the planning period of this data in format `YYYY-MM-DD`. |
-| `sDaysR` | opt. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *Regular* service days ([…] [on which] the train has a *regular* schedule)[…]. |
-| `sDaysI` | opt. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *Irregular* service days for this trip ([…] [on which] the train has a *different* schedule)[…]. |
-| `sDaysB` | opt. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
-| `routeIdxFrom` | opt. | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | First stop/station where this […][service rule] is valid. See the [`Stops` list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
-| `routeIdxTo` | opt. | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Last stop/station where this […][service rule] is valid. See the [`Stops` list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
+| `planningPeriodBegin` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Start of the planning period of this data in format `YYYY-MM-DD`. |
+| `planningPeriodEnd` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | End of the planning period of this data in format `YYYY-MM-DD`. |
+| `sDaysR` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *Regular* service days ([…] [on which] the train has a *regular* schedule)[…]. |
+| `sDaysI` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *Irregular* service days for this trip ([…] [on which] the train has a *different* schedule)[…]. |
+| `sDaysB` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
+| `routeIdxFrom` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | First stop/station where this […][service rule] is valid. See the [`Stops` list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
+| `routeIdxTo` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Last stop/station where this […][service rule] is valid. See the [`Stops` list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
 
 
 
@@ -312,11 +313,11 @@ The `ServiceDays` element defines *regular* and *irregular* services days. It ha
 
 | attribute | use | type | description |
 |:----------|:----|:-----|:------------|
-| `serverVersion` | opt. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | The version of the HAFAS proxy server which was used to calculate that result. |
-| `dialectVersion` | opt. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | The version of the response data structure. |
-| `version` | opt. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | The data version in the HAFAS server which was used to calculate that result. |
-| `errorCode` | opt. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | If the request fails, then the `errorCode` is filled. |
-| `errorText` | opt. | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | If the request fails, then the `errorText` is filled. |
+| `serverVersion` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | The version of the HAFAS proxy server which was used to calculate that result. |
+| `dialectVersion` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | The version of the response data structure. |
+| `version` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | The data version in the HAFAS server which was used to calculate that result. |
+| `errorCode` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | If the request fails, then the `errorCode` is filled. |
+| `errorText` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | If the request fails, then the `errorText` is filled. |
 
 
 
