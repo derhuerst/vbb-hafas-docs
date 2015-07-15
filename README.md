@@ -293,7 +293,78 @@ The `ServiceDays` element defines *regular* and *irregular* services days. It ha
 
 
 
-## common elements
+## arrival & departure service
+
+This service can be used to query arrivals and departures on a station.
+
+
+
+
+### [`ArrivalBoard`](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L345)/[`DepartureBoard`](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L644)
+
+> The arrival board lists arrivals at a specific stop/station or group of stop/stations.
+
+> The departure board lists departures at a specific stop/station or group of stop/stations.
+
+The `ArrivalBoard` and `DepartureBoard` elements each contain any number of [`Arrival`/`Departure`](#todo) elements. They both inherit [common attributes](#todo).
+
+
+
+#### [`Arrival`](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L360)/[`Departure`](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L659)
+
+> The element `Arrival` contains all information about a arrival like time, date, stop/station name, track, realtime time, date and track, origin, name and type of the journey. It also contains a reference to journey details.
+
+> The element `Departure` contains all information about a departure like time, date, stop/station name, track, realtime time, date and track, direction, name and type of the journey. It also contains a reference to journey details.
+
+The `Arrival`/`Departure` elements each contain the following elements.
+
+1. [`JourneyDetailRef`](#todo)
+2. [`Product`](#todo) (optional)
+3. [`Notes`](#todo) (optional)
+
+They have the following attributes.
+
+| attribute | use | type | description |
+|:----------|:----|:-----|:------------|
+| `stop` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Contains the name of this stop/station. |
+| `stopId` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Contains the ID of the stop/station. |
+| `stopExtId` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | External ID of the stop/station. [This ID defines an alternative ID for this stop/station and can not be used to perform further requests.] |
+| `prognosisType` | opt. | [`PrognosisType`](#todo) | Prognosis type of arrival[/departure] date and time. |
+| `cancelled` | opt. | [`boolean`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#boolean) | *Default: `false`* Will be `true` if this journey is cancelled. |
+| `origin` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Origin of the journey. This is the first stop of the journey. Get the full journey of the train or bus with the JourneyDetails service. *todo: What attribute of the journey? id? name?* |
+| `trainNumber` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Train number as used for display. *todo: why isn't this an `number`?* |
+| `trainCategory` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Train category as used for display. |
+
+**The date, time and track information** provided by the following attributes **is also available as real time data**. **These real time data attributes** work in the same way but **have `rt` in front** (`depTrack` -> `rtDepTrack`).
+
+| attribute | use | type | description |
+|:----------|:----|:-----|:------------|
+| `time` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Time in format `HH:MM:SS`, if available. |
+| `date` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Date in format `YYYY-MM-DD`, if available. |
+| `tz` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Time zone information in the format […][`+H` or `-H`]]. |
+| `track` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Arrival track information, if available. |
+
+The following attributes are **special to `Arrival`**. They are also available for **real time data** (`timeAtOrigin` -> `rtTimeAtOrigin`).
+
+| attribute | use | type | description |
+|:----------|:----|:-----|:------------|
+| `timeAtOrigin` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Time in format `HH:MM:SS` the service[…] starts at the origin. |
+| `dateAtOrigin` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Date in format `YYYY-MM-DD` the service[…] starts at the origin. |
+
+The following attributes are **special to `Departure`**. `timeAtArrival` and `dateAtArrival` are also available as **real time data** attributes (`timeAtArrival` -> `rtTimeAtArrival`).
+
+| attribute | use | type | description |
+|:----------|:----|:-----|:------------|
+| `timeAtArrival` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Time in format `HH:MM:SS` the service[…] arrives at the destination. |
+| `dateAtArrival` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Date in format `YYYY-MM-DD` the service[…] arrives at the destination. |
+| `isFastest` | opt. | [`boolean`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#boolean) | Services is 'fastest service to' location. |
+
+
+
+
+
+
+## other stuff
 
 
 
