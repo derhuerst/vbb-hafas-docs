@@ -6,12 +6,12 @@ This document describes the general structure of all responses of the HAFAS syst
 
 I was looking for a detailed description of the VBB API, and out of sheer desperation, it created this document. **Please help me keep it up to date**, since it's a relatively small effort just adjusting this to new API versions.
 
-- [location service](#todo)
-- [journey service](#todo)
-- [arrival & departure service](#todo)
-- [other stuff](#todo)
-- [common attributes](#todo)
-- [critique](#todo)
+- [location service](#location-service)
+- [journey service](#journey-service)
+- [arrival & departure service](#arrival--departure-service)
+- [other stuff](#other-stuff)
+- [common attributes](#common-attributes)
+- [critique](#critique)
 
 
 
@@ -28,7 +28,7 @@ This service can be used to find stations/stops, addresses and points of interes
 
 > The location list contains either named coordinates or stops/stations with name and id as a result of a location request. The data of every list entry can be used for further trip or departureBoard requests.
 
-The `LocationList` element contains one or more [`StopLocation`](#todo) or [`CoordLocation`](#todo) elements. It also inherits [common attributes](#todo).
+The `LocationList` element contains one or more [`StopLocation`](#stoplocation) or [`CoordLocation`](#coordlocation) elements. It also inherits [common attributes](#common-attributes).
 
 
 
@@ -36,7 +36,7 @@ The `LocationList` element contains one or more [`StopLocation`](#todo) or [`Coo
 
 > The element `StopLocation` specifies a stop/station in a result of a location request.
 
-> Contains […][any number of] [lists of notes](#todo) to be displayed for this location, like attributes or footnotes.
+> Contains […][any number of] [lists of notes](#notes) to be displayed for this location, like attributes or footnotes.
 
 The `StopLocation` element has the following attributes.
 
@@ -59,7 +59,7 @@ The `StopLocation` element has the following attributes.
 
 > The element `CoordLocation` specifies a coordinate based location in a result of a location request. It contains an output name, latitude, longitude and a type (address or point of interest). The coordinates and the name can be used as origin or destination parameters to perform a trip request.
 
-> Contains a [list of notes](#todo) to be displayed for this location, like attributes or footnotes.
+> Contains a [list of notes](#notes) to be displayed for this location, like attributes or footnotes.
 
 The `CoordLocation` element has the following attributes.
 
@@ -75,7 +75,7 @@ The `CoordLocation` element has the following attributes.
 
 #### [`LocationNotes`](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L173)
 
-> Contains […][any number of] [notes](#todo) to be displayed for this location.
+> Contains […][any number of] [notes](#locationnote) to be displayed for this location.
 
 
 ##### [`LocationNote`](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L187)
@@ -105,32 +105,32 @@ The `LocationNote` element has the following attributes. **Its (text) content is
 
 > The journey details contain a list of stops/stations and notes. They also contain the journeys names and types.
 
-`JourneyDetail` inherits [common attributes](#todo). It contains any number of sequences of the following elements.
+`JourneyDetail` inherits [common attributes](#common-attributes). It contains any number of sequences of the following elements.
 
-1. [`Stops`](#todo)
-2. [`GeometryRef`](#todo) (optional)
-3. [`Names`](#todo) (optional)
-4. [`Directions`](#todo) (optional)
-5. [`Notes`](#todo) (optional) Contains notes to be displayed for this trip like attributes or footnotes.
-6. [`Messages`](#todo) (optional)
-7. [`JourneyStatus`](#todo) (optional)
-8. [`Polyline`](#todo) (optional)
-9. [`ServiceDays`](#todo) (optional)
+1. [`Stops`](#stops)
+2. [`GeometryRef`](#geometryref) (optional)
+3. [`Names`](#names) (optional)
+4. [`Directions`](#directions) (optional)
+5. [`Notes`](#notes) (optional) Contains notes to be displayed for this trip like attributes or footnotes.
+6. [`Messages`](#messages) (optional)
+7. [`JourneyStatus`](#journeystatus) (optional)
+8. [`Polyline`](#polyline) (optional)
+9. [`ServiceDays`](#servicedays) (optional)
 
 
 
 #### [`Stops`](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L819)
 
-> The list of [journey stops/stations](#todo).
+> The list of [journey stops/stations](#stop).
 
-The `Stops` element **contains *two* or more [`Stop` elements](#todo)**.
+The `Stops` element **contains *two* or more [`Stop` elements](#stop)**.
 
 
 ##### [`Stop`](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L825)
 
 > The element `Stop` contains the name of the stop/station, the route index, the latitude, the longitude, the departure time and date, the arrival time and date, the track, the realtime departure time and date, the realtime arrival time and date and the realtime track.
 
-> Contains […][any number of] [lists of notes](#todo) to be displayed for this location, like attributes or footnotes.
+> Contains […][any number of] [lists of notes](#note) to be displayed for this location, like attributes or footnotes.
 
 The `Stop` element has the following attributes.
 
@@ -142,8 +142,8 @@ The `Stop` element has the following attributes.
 | `routeIdx` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Route index of a stop/station. Usually starting from `0` and incrementing by `1`. If the route index value jumps, it is most likely that the journey was rerouted. |
 | `lon` | opt. | [`decimal`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#decimal) | The [WGS84](https://de.wikipedia.org/wiki/World_Geodetic_System_1984) longitude of the geographical position of the stop/station. |
 | `lat` | opt. | [`decimal`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#decimal) | The [WGS84](https://de.wikipedia.org/wiki/World_Geodetic_System_1984) latitude of the geographical position of the stop/station. |
-| `arrPrognosisType` | opt. | [`PrognosisType`](#todo) | Prognosis type of arrival date and time. |
-| `depPrognosisType` | opt. | [`PrognosisType`](#todo) | Prognosis type of departure date and time. |
+| `arrPrognosisType` | opt. | [`PrognosisType`](#prognosistype-attribute) | Prognosis type of arrival date and time. |
+| `depPrognosisType` | opt. | [`PrognosisType`](#prognosistype-attribute) | Prognosis type of departure date and time. |
 | `cancelled` | opt. | [`boolean`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#boolean) | *Default: `false`* Will be `true` if this journey is cancelled. |
 
 **The date, time and track information** provided by the following attributes **is also available as real time data**. **These real time data attributes** work in the same way but **have `rt` in front** (`depTrack` -> `rtDepTrack`).
@@ -178,9 +178,9 @@ The `GeometryRef` element has the following attributes.
 
 #### [`Names`](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L1106)
 
-> The list of [journey names](#todo).
+> The list of [journey names](#name).
 
-The `Names` element contains any number of [`Name` elements](#todo).
+The `Names` element contains any number of [`Name` elements](#name).
 
 
 ##### [`Name`](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L1112)
@@ -196,16 +196,16 @@ The `Name` element contains any number of [`Product` elements](#todo). It has th
 | `name` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Name to be displayed. |
 | `number` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | The train number. *todo: why isn't this an `number`?* |
 | `category` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | The train category. |
-| `routeIdxFrom` | req. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Defines the first stop/station where this name is valid. See the [Stops list](#todo) for details of the stop/station. |
-| `routeIdxTo` | req. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Defines the last stop/station where this name is valid. See the [Stops list](#todo) for details of the stop/station. |
+| `routeIdxFrom` | req. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Defines the first stop/station where this name is valid. See the [`Stops` list](#stops) for details of the stop/station. |
+| `routeIdxTo` | req. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Defines the last stop/station where this name is valid. See the [`Stops` list](#stops) for details of the stop/station. |
 
 
 
 #### [`Directions`](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L1000)
 
-> The list of [journey directions](#todo).
+> The list of [journey directions](#direction).
 
-The `Directions` element contains any number of [`Direction` elements](#todo)**.
+The `Directions` element contains any number of [`Direction` elements](#direction)**.
 
 
 ##### [`Direction`](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L1006)
@@ -216,18 +216,18 @@ The `Direction` element has the following attributes. **Its (text) content is a 
 
 | attribute | use | type | description |
 |:----------|:----|:-----|:------------|
-| `routeIdxFrom` | req. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Defines the first stop/station where this type is valid. See the [Stops list](#todo) for details of the stop/station. |
-| `routeIdxTo` | req. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Defines the last stop/station where this type is valid. See the [Stops list](#todo) for details of the stop/station. |
+| `routeIdxFrom` | req. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Defines the first stop/station where this type is valid. See the [`Stops` list](#stops) for details of the stop/station. |
+| `routeIdxTo` | req. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Defines the last stop/station where this type is valid. See the [`Stops` list](#stops) for details of the stop/station. |
 
 
 
 #### [`Messages`](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L1034)
 
-> Contains […][messages](#todo) to be displayed for this trip.
+> Contains […][messages](#message) to be displayed for this trip.
 
-The `Messages` element contains any number of [`Message` elements](#todo)**.
+The `Messages` element contains any number of [`Message` elements](#message)**.
 
-*todo: move this to [other stuff](#todo)*
+*todo: move this to [other stuff](#other-stuff)*
 
 
 ##### [`Message`](https://github.com/derhuerst/vbb-hafas-docs/blob/master/vbb-hafas.xsd#L1040)
@@ -236,7 +236,7 @@ The `Messages` element contains any number of [`Message` elements](#todo)**.
 
 The `Message` element has the following attributes. **Its (text) content is a [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string).**
 
-*todo: move this to [other stuff](#todo)*
+*todo: move this to [other stuff](#other-stuff)*
 
 *todo: what the hell is this?*
 
@@ -252,8 +252,8 @@ The `Message` element has the following attributes. **Its (text) content is a [`
 | `tckr` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
 | `priority` | req. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | The priority of this message. A lower priority value means a higher importance. A priority with value `-1` means priority is undefined. |
 | `icon` | | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
-| `routeIdxFrom` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | First stop/station where this message is valid. See the [`Stops` list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
-| `routeIdxTo` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Last stop/station where this message is valid. See the [`Stops` list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
+| `routeIdxFrom` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | First stop/station where this message is valid. See the [`Stops` list in the JourneyDetail response](#stops) for this leg to get more details about this stop/station. |
+| `routeIdxTo` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Last stop/station where this message is valid. See the [`Stops` list in the JourneyDetail response](#stops) for this leg to get more details about this stop/station. |
 
 
 
@@ -289,8 +289,8 @@ The `ServiceDays` element defines *regular* and *irregular* services days. It ha
 | `sDaysR` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *Regular* service days ([…] [on which] the train has a *regular* schedule)[…]. |
 | `sDaysI` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *Irregular* service days for this trip ([…] [on which] the train has a *different* schedule)[…]. |
 | `sDaysB` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | *@VBB @HaCon what is this??* |
-| `routeIdxFrom` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | First stop/station where this […][service rule] is valid. See the [`Stops` list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
-| `routeIdxTo` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Last stop/station where this […][service rule] is valid. See the [`Stops` list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
+| `routeIdxFrom` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | First stop/station where this […][service rule] is valid. See the [`Stops` list in the `JourneyDetail` response](#stops) for this leg to get more details about this stop/station. |
+| `routeIdxTo` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Last stop/station where this […][service rule] is valid. See the [`Stops` list in the `JourneyDetail` response](#stops) for this leg to get more details about this stop/station. |
 
 
 
@@ -309,7 +309,7 @@ This service can be used to query arrivals and departures on a station.
 
 > The departure board lists departures at a specific stop/station or group of stop/stations.
 
-The `ArrivalBoard` and `DepartureBoard` elements each contain any number of [`Arrival`/`Departure`](#todo) elements. They both inherit [common attributes](#todo).
+The `ArrivalBoard` and `DepartureBoard` elements each contain any number of [`Arrival`/`Departure`](#arrivaldeparture) elements. They both inherit [common attributes](#common-attributes).
 
 
 
@@ -321,9 +321,9 @@ The `ArrivalBoard` and `DepartureBoard` elements each contain any number of [`Ar
 
 The `Arrival`/`Departure` elements each contain the following elements.
 
-1. [`JourneyDetailRef`](#todo)
+1. [`JourneyDetailRef`](#journeydetailref)
 2. [`Product`](#todo) (optional)
-3. [`Notes`](#todo) (optional)
+3. [`Notes`](#notes) (optional)
 
 They have the following attributes.
 
@@ -332,7 +332,7 @@ They have the following attributes.
 | `stop` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Contains the name of this stop/station. |
 | `stopId` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Contains the ID of the stop/station. |
 | `stopExtId` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | External ID of the stop/station. [This ID defines an alternative ID for this stop/station and can not be used to perform further requests.] |
-| `prognosisType` | opt. | [`PrognosisType`](#todo) | Prognosis type of arrival[/departure] date and time. |
+| `prognosisType` | opt. | [`PrognosisType`](#prognosistype-attribute) | Prognosis type of arrival[/departure] date and time. |
 | `cancelled` | opt. | [`boolean`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#boolean) | *Default: `false`* Will be `true` if this journey is cancelled. |
 | `origin` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Origin of the journey. This is the first stop of the journey. Get the full journey of the train or bus with the JourneyDetails service. *todo: What attribute of the journey? id? name?* |
 | `trainNumber` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Train number as used for display. *todo: why isn't this an `number`?* |
@@ -370,7 +370,7 @@ The following attributes are **special to `Departure`**. `timeAtArrival` and `da
 
 ## trip service
 
-*todo: difference to [trip service](#todo)?*
+*todo: difference to [journey service](#journey-service)?*
 *todo: what is the purpose?*
 
 *todo*
@@ -394,7 +394,7 @@ The following attributes are **special to `Departure`**. `timeAtArrival` and `da
 
 > Contains a text with notes to be displayed for this leg, like attributes or footnotes.
 
-The `Notes` element contains any number of [`Note` elements](#todo).
+The `Notes` element contains any number of [`Note` elements](#note).
 
 
 
@@ -409,8 +409,8 @@ The `Note` element has the following attributes. **Its (text) content is a [`str
 | `key` | opt. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | An identifier of this note. The identifier is composed of a two letter combination further identifying the content of the note. |
 | `type` | opt. | *[`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string)-based*; `U` / `A` / `I` / `R` / `H` | *Default: `U`* The type of this note. Unknown: `U`. Attribute: `A`. Infotext: `I`. Realtime: `R`. Hint: `H`. |
 | `priority` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | The priority of this note. A lower priority value means a higher importance. A priority with value `-1` means priority is undefined. |
-| `routeIdxFrom` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | First stop/station where this note is valid. See the [`Stops` list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
-| `routeIdxTo` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Last stop/station where this note is valid. See the [`Stops` list in the JourneyDetail response](#todo) for this leg to get more details about this stop/station. |
+| `routeIdxFrom` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | First stop/station where this note is valid. See the [`Stops` list in the JourneyDetail response](#stops) for this leg to get more details about this stop/station. |
+| `routeIdxTo` | opt. | [`int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Last stop/station where this note is valid. See the [`Stops` list in the JourneyDetail response](#stops) for this leg to get more details about this stop/station. |
 
 
 
@@ -423,7 +423,7 @@ The `JourneyDetailRef` element has the following attribute.
 
 | attribute | use | type | description |
 |:----------|:----|:-----|:------------|
-| `ref` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Contains a URL to call the ReST interface for [journey details](#todo). |
+| `ref` | req. | [`string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Contains a URL to call the ReST interface for [journey details](#journeydetails). |
 
 *@HaCON this is weird!*
 
@@ -451,7 +451,7 @@ The `JourneyDetailRef` element has the following attribute.
 
 > This element represents the response in case of any error
 
-`Error` inherits [common attributes](#todo).
+`Error` inherits [common attributes](#common-attributes).
 
 
 
