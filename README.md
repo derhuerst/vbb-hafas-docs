@@ -6,12 +6,12 @@ This document describes the general structure of all responses of the HAFAS syst
 
 I was looking for a detailed description of the VBB API, and out of sheer desperation, it created this document. **Please help me keep it up to date**, since it's a relatively small effort just adjusting this to new API versions.
 
-– [location service](#todo)
-– [journey service](#todo)
-– [arrival & departure service](#todo)
-– [other stuff](#todo)
-– [common attributes](#todo)
-– [critique](#todo)
+- [location service](#todo)
+- [journey service](#todo)
+- [arrival & departure service](#todo)
+- [other stuff](#todo)
+- [common attributes](#todo)
+- [critique](#todo)
 
 
 
@@ -315,8 +315,8 @@ The `ServiceDays` element defines *regular* and *irregular* services days. It ha
 | `serverVersion` (optional) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | The version of the HAFAS proxy server which was used to calculate that result. |
 | `dialectVersion` (optional) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | The version of the response data structure. |
 | `version` (optional) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | The data version in the HAFAS server which was used to calculate that result. |
-| `errorCode` (optional) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | If the request fails, then the errorCode is filled. |
-| `errorText` (optional) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | If the request fails, then the errorText is filled. |
+| `errorCode` (optional) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | If the request fails, then the `errorCode` is filled. |
+| `errorText` (optional) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | If the request fails, then the `errorText` is filled. |
 
 
 
@@ -329,6 +329,7 @@ The `ServiceDays` element defines *regular* and *irregular* services days. It ha
 *Disclaimer: My viewpoint might be relatively superficial (since I'm not a co-author of HAFAS), maybe even arrogant. But at least these are the questions and hurdles I have had to fight with, so please consider making this API truly developer-friendly.*
 
 The structures of **`Stop`, `Arrival` and `Departure`** all look very similar. Why not **unify them into `Stops`** with a `role`/`action` attribute (with the values `enterTrain`, `stop`, `changeTrain` and `leaveTrain`)?
+
 **`Arrival` and `Departure`** as well as **`ArrivalBoard` and `DepartureBoard`**, respectively, **could easily be unified**. Again, a single attribute could give enough context.
 
 
