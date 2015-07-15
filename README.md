@@ -6,6 +6,13 @@ This document describes the general structure of all responses of the HAFAS syst
 
 I was looking for a detailed description of the VBB API, and out of sheer desperation, it created this document. **Please help me keep it up to date**, since it's a relatively small effort just adjusting this to new API versions.
 
+– [location service](#todo)
+– [journey service](#todo)
+– [arrival & departure service](#todo)
+– [other stuff](#todo)
+– [common attributes](#todo)
+– [critique](#todo)
+
 
 
 
@@ -100,15 +107,15 @@ The `LocationNote` element has the following attributes. **Its (text) content is
 
 `JourneyDetail` inherits [common attributes](#todo). It contains any number of sequences of the following elements.
 
-- [`Stops`](#todo)
-- [`GeometryRef`](#todo) (optional)
-- [`Names`](#todo) (optional)
-- [`Directions`](#todo) (optional)
-- [`Notes`](#todo) (optional) Contains notes to be displayed for this trip like attributes or footnotes.
-- [`Messages`](#todo) (optional)
-- [`JourneyStatus`](#todo) (optional)
-- [`Polyline`](#todo) (optional)
-- [`ServiceDays`](#todo) (optional)
+1. [`Stops`](#todo)
+2. [`GeometryRef`](#todo) (optional)
+3. [`Names`](#todo) (optional)
+4. [`Directions`](#todo) (optional)
+5. [`Notes`](#todo) (optional) Contains notes to be displayed for this trip like attributes or footnotes.
+6. [`Messages`](#todo) (optional)
+7. [`JourneyStatus`](#todo) (optional)
+8. [`Polyline`](#todo) (optional)
+9. [`ServiceDays`](#todo) (optional)
 
 
 
@@ -139,21 +146,21 @@ The `Stop` element has the following attributes.
 | `depPrognosisType` (optional) | [`PrognosisType`](#todo) | Prognosis type of departure date and time. |
 | `cancelled` (optional) | [`xs:boolean`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#boolean) | *Default: `false`* Will be `true` if this journey is cancelled. |
 
-**The date and time information** provided by the following attributes **is also available as real time data**. **These real time data attributes** work in the same way but **have `rt` in front** (`depTrack` -> `rtDepTrack`).
+**The date, time and track information** provided by the following attributes **is also available as real time data**. **These real time data attributes** work in the same way but **have `rt` in front** (`depTrack` -> `rtDepTrack`).
 
 | attribute | type | description |
 |:----------|:-----|:------------|
 | `arrTrack` (optional) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Arrival track information, if available. |
 | `arrTime` (optional) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Arrival time in format `HH:MM:SS`, if available. |
 | `arrDate` (optional) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Arrival date in format `YYYY-MM-DD`, if available. |
-| `arrTz` (optional) | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Arrival time zone information in the format `+H` or `-H`. |
+| `arrTz` (optional) | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Arrival time zone information in the format […][`+H` or `-H`]. |
 | `depTrack` (optional) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Departure track information, if available. |
 | `depTime` (optional) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Departure time in format `HH:MM:SS`, if available. |
 | `depDate` (optional) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Departure date in format `YYYY-MM-DD`, if available. |
-| `depTz` (optional) | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Departure time zone information in the format `+H` or `-H`. |
+| `depTz` (optional) | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Departure time zone information in the format […][`+H` or `-H`]. |
 | `passingTime` (optional) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Passing time in format `HH:MM:SS`, if available. *todo: what is this?* |
 | `passingDate` (optional) | [`xs:string`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#string) | Passing date in format `YYYY-MM-DD`, if available. *todo: what is this?* |
-| `passingTz` (optional) | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Passing time zone information in the format `+H` or `-H`. *todo: what is this?* |
+| `passingTz` (optional) | [`xs:int`](http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#integer) | Passing time zone information in the format […][`+H` or `-H`]. *todo: what is this?* |
 
 
 
@@ -321,11 +328,10 @@ The `ServiceDays` element defines *regular* and *irregular* services days. It ha
 
 *Disclaimer: My viewpoint might be relatively superficial (since I'm not a co-author of HAFAS), maybe even arrogant. But at least these are the questions and hurdles I have had to fight with, so please consider making this API truly developer-friendly.*
 
-The structures of `Stops`, `Arrival` and `Departure` all look very similar. Why not unify them into `Stops` with a `role`/`action` attribute (with the values `enterTrain`, `stop`, `changeTrain` and `leaveTrain`)?
+The structures of **`Stop`, `Arrival` and `Departure`** all look very similar. Why not **unify them into `Stops`** with a `role`/`action` attribute (with the values `enterTrain`, `stop`, `changeTrain` and `leaveTrain`)?
+**`Arrival` and `Departure`** as well as **`ArrivalBoard` and `DepartureBoard`**, respectively, **could easily be unified**. Again, a single attribute could give enough context.
 
-`Arrival` and `Departure` as well as `ArrivalBoard` and `DepartureBoard` could easily be unified.
- Again, a single attribute could give enough context.
 
 I think the `GeometryRef` and `GisRef` stuff is too loosely related to the purpose of this API. Get rid of it and move to its own API endpoint.
 
-And finally: Please please please provide XML *and* JSON *consistently* on *all* API endpoints!
+And finally: **Please please please provide XML *and* JSON *consistently* on *all* API endpoints!**
